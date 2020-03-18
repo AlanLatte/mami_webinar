@@ -5,6 +5,8 @@ def register_to_vebinar(eventsessionID, name, email):
     names = name_refactor(name)
     emails = email_refactoring(email)
     for id in range(len(names)):
+        if names[id] == '' or emails[id] == '':
+            continue
         body    =   {
                         'name'  :   str(names[id]),
                         'role'  :   'LECTURER',
