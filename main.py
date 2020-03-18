@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 import xlrd, xlwt
 from common import ROOMS
 from common import HEADERS as headers
+from registrator import register_to_vebinar
 
 def get_users_json():
     url     = 'https://userapi.webinar.ru/v3/organization/members'
@@ -56,15 +57,6 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
     answer = requests.post(url, data=body, headers=headers).json()
     print(answer)
     return answer['eventSessionId'], answer['link']
-
-def register_to_vebinar(eventsessionID, name, email):
-    url     = f'https://userapi.webinar.ru/v3/eventsessions/{str(eventsessionID)}/register'
-    body    =   {
-                    'name'  :   str(name),
-                    'role'  :   'LECTURER',
-                    'email' :   str(email),
-                }
-    print(requests.post(url, data=body, headers=headers).json())
 
 def start_to_vebinar(eventSessionId):
     url     = f' https://userapi.webinar.ru/v3/eventsessions/{str(eventSessionId)}/start'
