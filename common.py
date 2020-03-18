@@ -1,3 +1,6 @@
+HEADERS = dict(
+            'content-type' = 'application/x-www-form-urlencoded'
+            'x-auth-token' = '62c679c0340cd0b1aca7b34099384f54')
 ROOMS = [
             (19396587, 'W000'),
             (1996923, 'W001'),
