@@ -54,8 +54,9 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
 
 def main(path):
     id      = 0
-    sheet_  = wload_workbook(path)['Worksheet']
-    row     = 2
+    wb      = load_workbook(path)
+    sheet_  = wb['Worksheet']
+    row     = 5
     while True:
         year, month, day = conver_time(sheet_.cell(row = row, column = 1).value)
         name    = sheet_.cell(row = row, column = 3).value
@@ -63,7 +64,7 @@ def main(path):
         subject = sheet_.cell(row = row, column = 6).value
         start_t = str(sheet_.cell(row=row, column=7).value).split(':')
 
-        print(name,email,time,subject, start_t)
+        print(year, month, day,name,email,subject, start_t)
 
         event_id    = create_event(
             name    =   subject,
@@ -91,6 +92,7 @@ def main(path):
             email           =   email
         )
 
+        sheet_.cell(row = row, column = 15).value = event_session_id
         sheet_.cell(row = row, column = 9).value = link
         sheet_.cell(row = row, column = 10).value = ROOMS[id][1]
         wb.save(path)
