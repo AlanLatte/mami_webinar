@@ -1,4 +1,5 @@
 from common import HEADERS as headers
+import requests
 
 def register_to_vebinar(eventsessionID, name, email):
     url     = f'https://userapi.webinar.ru/v3/eventsessions/{str(eventsessionID)}/register'
@@ -19,5 +20,6 @@ def name_refactor(name):
     return name
 
 def email_refactoring(email):
-    email = name.split('|')
+    email = email.replace(' ', '')
+    email = email.split('|')
     return email
