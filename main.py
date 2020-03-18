@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 from common import ROOMS
 from common import HEADERS as headers
 from registrator import register_to_vebinar
+from time_manager import conver_time
 
 def change_path():
     import os
@@ -56,10 +57,7 @@ def main(path):
     sheet_  = wload_workbook(path)['Worksheet']
     row     = 2
     while True:
-        time    = [2020, 3, 18]
-        year    = time[0]
-        month   = time[1]
-        day     = time[2]
+        year, month, day = conver_time(sheet_.cell(row = row, column = 1).value)
         name    = sheet_.cell(row = row, column = 3).value
         email   = sheet_.cell(row = row, column = 4).value
         subject = sheet_.cell(row = row, column = 6).value
@@ -94,8 +92,8 @@ def main(path):
                 email           =   email
             )
 
-            sheet_.cell(row = row, column = 10).value = link
-            sheet_.cell(row = row, column = 11).value = ROOMS[id][1]
+            sheet_.cell(row = row, column = 9).value = link
+            sheet_.cell(row = row, column = 10).value = ROOMS[id][1]
             wb.save(path)
 
         if id+1 == len(ROOMS):
