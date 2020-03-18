@@ -65,36 +65,35 @@ def main(path):
 
         print(name,email,time,subject, start_t)
 
-        else:
-            event_id    = create_event(
-                name    =   subject,
-                user_id =   ROOMS[id][0],
-                year    =   int(year),
-                month   =   int(month),
-                day     =   int(day),
-                hour_s  =   int(start_t[0]),
-                minut_s =   int(start_t[1])
-            )
+        event_id    = create_event(
+            name    =   subject,
+            user_id =   ROOMS[id][0],
+            year    =   int(year),
+            month   =   int(month),
+            day     =   int(day),
+            hour_s  =   int(start_t[0]),
+            minut_s =   int(start_t[1])
+        )
 
-            event_session_id, link  = create_event_session(
-                event_id    =   event_id,
-                name        =   subject,
-                year        =   int(year),
-                month       =   int(month),
-                day         =   int(day),
-                hour_s      =   int(start_t[0]),
-                minute_s    =   int(start_t[1])
-            )
+        event_session_id, link  = create_event_session(
+            event_id    =   event_id,
+            name        =   subject,
+            year        =   int(year),
+            month       =   int(month),
+            day         =   int(day),
+            hour_s      =   int(start_t[0]),
+            minute_s    =   int(start_t[1])
+        )
 
-            register_to_vebinar(
-                eventsessionID  =   event_session_id,
-                name            =   name,
-                email           =   email
-            )
+        register_to_vebinar(
+            eventsessionID  =   event_session_id,
+            name            =   name,
+            email           =   email
+        )
 
-            sheet_.cell(row = row, column = 9).value = link
-            sheet_.cell(row = row, column = 10).value = ROOMS[id][1]
-            wb.save(path)
+        sheet_.cell(row = row, column = 9).value = link
+        sheet_.cell(row = row, column = 10).value = ROOMS[id][1]
+        wb.save(path)
 
         if id+1 == len(ROOMS):
             id = 0
