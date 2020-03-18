@@ -6,22 +6,15 @@ from common import ROOMS
 from common import HEADERS as headers
 from registrator import register_to_vebinar
 
-def get_users_json():
-    url     = 'https://userapi.webinar.ru/v3/organization/members'
-    return requests.get(url, headers=headers).json()
-
-def json_with_users():
-    data = {}
-    user_json = get_users_json()
-    for obj in user_json:
-        if 'Комнат' in obj['nickname']:
-            data[obj['id']] = obj['nickname']
-    list_d = list(data.items())
-    list_d.sort(key=lambda i: i[1])
-    return list_d
-
-def creater_event(url, body, headers):
-    print(requests.post(url, data=body, headers=headers).json())
+def change_path():
+    import os
+    os.chdir(
+        os.path.realpath(
+            os.path.join(
+                os.getcwd(), os.path.dirname(file)
+            )
+        )
+    )
 
 def create_event(name, user_id, year, month, day, hour_s, minut_s):
     url     =   'https://userapi.webinar.ru/v3/events'
@@ -58,15 +51,9 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
     print(answer)
     return answer['eventSessionId'], answer['link']
 
-def start_to_vebinar(eventSessionId):
-    url     = f' https://userapi.webinar.ru/v3/eventsessions/{str(eventSessionId)}/start'
-    answer  = requests.put(url, headers=headers)
-
-def work_with_file(path):
-    json_   = json_with_users()
+def main(path):
     id      = 0
     hour_   = 9
-
     wb      = load_workbook(path)
     sheet_  = wb['Worksheet']
     row     = 2
@@ -82,14 +69,14 @@ def work_with_file(path):
 
         print(name,email,time,subject, start_t)
 
-        if id == len(json_):
+        if id == len(ROOMS):
             sheet_.cell(row=row, column=11).value = 'Нет мест'
         else:
             book        = xlwt.Workbook(encoding="utf-8")
 
             event_id    = create_event(
                 name    =   subject,
-                user_id =   json_[id][0],
+                user_id =   ROOMS[id][0],
                 year    =   int(year),
                 month   =   int(month),
                 day     =   int(day),
@@ -113,7 +100,7 @@ def work_with_file(path):
                 email           =   email)
 
             sheet_.cell(row=row, column=10).value = link
-            sheet_.cell(row=row, column=11).value = json_[id][1]
+            sheet_.cell(row=row, column=11).value = ROOMS[id][1]
             wb.save(path)
 
         if int(start_t[0]) != int(hour_):
@@ -126,5 +113,6 @@ def work_with_file(path):
             break
 
 if __name__ == '__main__':
+    change_path()
     path = 'main__01.xlsx'
-    work_with_file(path)
+    main(path)
