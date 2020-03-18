@@ -67,10 +67,7 @@ def main(path):
 
         print(name,email,time,subject, start_t)
 
-        if id == len(ROOMS):
-            sheet_.cell(row=row, column=11).value = 'Нет мест'
         else:
-
             event_id    = create_event(
                 name    =   subject,
                 user_id =   ROOMS[id][0],
@@ -101,6 +98,11 @@ def main(path):
             sheet_.cell(row = row, column = 11).value = ROOMS[id][1]
             wb.save(path)
 
+        if id+1 == len(ROOMS):
+            id = 0
+        else:
+            id += 1
+        row += 1
         if sheet_.cell(row = row, column = 1).value == None:
             break
 
