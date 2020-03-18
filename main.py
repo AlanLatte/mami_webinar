@@ -57,11 +57,7 @@ def main(path):
     sheet_  = wload_workbook(path)['Worksheet']
     row     = 2
     while True:
-<<<<<<< HEAD
         year, month, day = conver_time(sheet_.cell(row = row, column = 1).value)
-=======
-        year, month, day = conver_time(str(sheet_.cell(row = row, column = 1).value))
->>>>>>> 8a568016b70c5c34ce4eeb898e3f662c1dc5837c
         name    = sheet_.cell(row = row, column = 3).value
         email   = sheet_.cell(row = row, column = 4).value
         subject = sheet_.cell(row = row, column = 6).value
