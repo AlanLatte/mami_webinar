@@ -30,9 +30,9 @@ def create_event(name, user_id, year, month, day, hour_s, minut_s):
                     'type'                  :   'webinar',
                     'duration'              :   'PT1H30M0S',
                 }
-    r = requests.post(url, data=body, headers=headers)
-    print(r.json())
-    return r.json()['eventId']
+    answer = requests.post(url, data=body, headers=headers)
+    print(answer.json())
+    return answer.json()['eventId']
 
 def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
     url     =   f'https://userapi.webinar.ru/v3/events/{str(event_id)}/sessions'
@@ -53,18 +53,16 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
 
 def main(path):
     id      = 0
-    hour_   = 9
-    wb      = load_workbook(path)
-    sheet_  = wb['Worksheet']
+    sheet_  = wload_workbook(path)['Worksheet']
     row     = 2
     while True:
         time    = [2020, 3, 18]
         year    = time[0]
         month   = time[1]
         day     = time[2]
-        name    = sheet_.cell(row=row, column=3).value
-        email   = sheet_.cell(row=row, column=4).value
-        subject = sheet_.cell(row=row, column=6).value
+        name    = sheet_.cell(row = row, column = 3).value
+        email   = sheet_.cell(row = row, column = 4).value
+        subject = sheet_.cell(row = row, column = 6).value
         start_t = str(sheet_.cell(row=row, column=7).value).split(':')
 
         print(name,email,time,subject, start_t)
@@ -84,31 +82,26 @@ def main(path):
             )
 
             event_session_id, link  = create_event_session(
-                        event_id    =   event_id,
-                        name        =   subject,
-                        year        =   int(year),
-                        month       =   int(month),
-                        day         =   int(day),
-                        hour_s      =   int(start_t[0]),
-                        minute_s    =   int(start_t[1])
-                    )
+                event_id    =   event_id,
+                name        =   subject,
+                year        =   int(year),
+                month       =   int(month),
+                day         =   int(day),
+                hour_s      =   int(start_t[0]),
+                minute_s    =   int(start_t[1])
+            )
 
             register_to_vebinar(
                 eventsessionID  =   event_session_id,
                 name            =   name,
-                email           =   email)
+                email           =   email
+            )
 
-            sheet_.cell(row=row, column=10).value = link
-            sheet_.cell(row=row, column=11).value = ROOMS[id][1]
+            sheet_.cell(row = row, column = 10).value = link
+            sheet_.cell(row = row, column = 11).value = ROOMS[id][1]
             wb.save(path)
 
-        if int(start_t[0]) != int(hour_):
-            id = 1
-            hour_ = start_t[0]
-        else:
-            id += 1
-        row += 1
-        if sheet_.cell(row=row, column=1).value == None:
+        if sheet_.cell(row = row, column = 1).value == None:
             break
 
 if __name__ == '__main__':
