@@ -1,7 +1,6 @@
 import requests
 import json
 from openpyxl import load_workbook
-import xlrd, xlwt
 from common import ROOMS
 from common import HEADERS as headers
 from registrator import register_to_vebinar
@@ -19,7 +18,8 @@ def change_path():
 def create_event(name, user_id, year, month, day, hour_s, minut_s):
     url     =   'https://userapi.webinar.ru/v3/events'
     body    =   {
-                    'name'                  :   str(name), 'access':'1',
+                    'name'                  :   str(name),
+                    'access'                :   '1',
                     'startsAt[date][year]'  :   str(year),
                     'startsAt[date][month]' :   str(month),
                     'startsAt[date][day]'   :   str(day),
@@ -72,7 +72,6 @@ def main(path):
         if id == len(ROOMS):
             sheet_.cell(row=row, column=11).value = 'Нет мест'
         else:
-            book        = xlwt.Workbook(encoding="utf-8")
 
             event_id    = create_event(
                 name    =   subject,
