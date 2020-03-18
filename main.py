@@ -5,7 +5,8 @@ import xlrd, xlwt
 
 def get_users_json():
     url = 'https://userapi.webinar.ru/v3/organization/members'
-    headers = {'content-type': 'application/x-www-form-urlencoded', 'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'}
+    headers = {'content-type': 'application/x-www-form-urlencoded',
+               'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'}
     r = requests.get(url, headers=headers)
     return r.json()
 
@@ -35,10 +36,11 @@ def create_event(name, user_id, year, month, day, hour_s, minut_s):
                 'lectorids':str(user_id),
                 'ownerId':str(user_id),
                 'type':'webinar',
-                'duration': 'PT1H30M0S',
-    }
+                'duration': 'PT1H30M0S',    }
 
-    headers = {'content-type': 'application/x-www-form-urlencoded', 'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'}
+    headers = {'content-type': 'application/x-www-form-urlencoded',
+               'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'}
+
     r = requests.post(url, data=body, headers=headers)
     print(r.json())
     return r.json()['eventId']
@@ -47,19 +49,17 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
     url = f'https://userapi.webinar.ru/v3/events/{str(event_id)}/sessions'
 
     headers = { 'content-type': 'application/x-www-form-urlencoded',
-                'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'
-            }
+                'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'}
 
     body = {
-        'name':str(name),
-        'access':'1',
-        'lang' :'RU',
-        'startsAt[date][year]':str(year),
-        'startsAt[date][month]':str(month),
-        'startsAt[date][day]':str(day),
-        'startsAt[time][hour]':str(hour_s),
-        'startsAt[time][minute]':str(minute_s),
-    }
+            'name':str(name),
+            'access':'1',
+            'lang' :'RU',
+            'startsAt[date][year]':str(year),
+            'startsAt[date][month]':str(month),
+            'startsAt[date][day]':str(day),
+            'startsAt[time][hour]':str(hour_s),
+            'startsAt[time][minute]':str(minute_s), }
 
     r = requests.post(url, data=body, headers=headers)
     print(r.json())
@@ -72,10 +72,9 @@ def register_to_vebinar(eventsessionID, name, email):
                 'x-auth-token':'62c679c0340cd0b1aca7b34099384f54'}
 
     body = {
-                'name':str(name),
-                'role': 'LECTURER',
-                'email':str(email),
-    }
+            'name':str(name),
+            'role': 'LECTURER',
+            'email':str(email), }
 
     r = requests.post(url, data=body, headers=headers)
     print(r.json())
