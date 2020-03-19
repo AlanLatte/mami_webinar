@@ -3,8 +3,8 @@ import os
 get_abs_path_folder = lambda folder_name: os.path.join(
     os.path.dirname(os.getcwd()), str(folder_name))
 
-INPUT_FILE_PATH = get_abs_path_folder(folder_name="input")
-OUTPUT_FILE_PATH = get_abs_path_folder(folder_name="output")
+INPUT_DIR_PATH = get_abs_path_folder(folder_name="input")
+OUTPUT_DIR_PATH = get_abs_path_folder(folder_name="output")
 
 HEADERS = {
             'content-type' : 'application/x-www-form-urlencoded',
