@@ -1,6 +1,6 @@
 from modules.time_manager import converter_time
 from openpyxl import load_workbook
-from modules.consts.common import INPUT_FILE_PATH as input_path
+from .consts.common import INPUT_DIR_PATH
 import os
 
 directory = '../input'
@@ -30,8 +30,8 @@ def full_read_exel_file(path):
 
 def read_all_info():
     all_data = []
-    files = os.listdir(input_path)
+    files = os.listdir(INPUT_DIR_PATH)
     exel_files = filter(lambda x: x.endswith('.xlsx'), files)
     for file in exel_files:
-        all_data = [*all_data, *full_read_exel_file(input_path+f'/{file}')]
+        all_data = [*all_data, *full_read_exel_file(INPUT_DIR_PATH+f'/{file}')]
     return all_data

@@ -1,5 +1,5 @@
-from modules.consts.common import HEADERS as headers
 import requests
+from .consts.common import HEADERS as headers
 
 def register_to_vebinar(eventsessionID, name, email):
     url     = f'https://userapi.webinar.ru/v3/eventsessions/{str(eventsessionID)}/register'

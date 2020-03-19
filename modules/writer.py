@@ -1,7 +1,7 @@
 import os
 from openpyxl import load_workbook
 from openpyxl import Workbook
-from consts.common import OUTPUT_DIR_PATH
+from .consts.common import OUTPUT_DIR_PATH
 
 def write_data(sheet_, wb, event_session_id, link, room, row, path):
     sheet_.cell(row = row, column = 9).value = link
@@ -15,7 +15,7 @@ def create_workbook(data: list, name: str = "for_devs.xlsx"):
     if name not in os.listdir(OUTPUT_DIR_PATH):
         work_book = Workbook()
         work_book.save(filename = str(OUTPUT_FILE_PATH))
-        
+
     TITLE = tuple()
     work_book = load_workbook(OUTPUT_FILE_PATH)
     sheet_names = work_book.sheetnames
