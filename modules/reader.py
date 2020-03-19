@@ -27,5 +27,5 @@ def read_all_info(directory):
     files = os.listdir(directory)
     exel_files = filter(lambda x: x.endswith('.xlsx'), files)
     for file in exel_files:
-        all_data = [*all_data, *full_read_exel_file(f'../input/{file}')]
+        all_data = [*all_data, *full_read_exel_file(directory+f'/{file}')]
     return all_data
