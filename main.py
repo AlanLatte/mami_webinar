@@ -7,7 +7,7 @@ from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_time
 from modules.writer import write_data
 
-def change_path():
+def change_path(file: str) -> None:
     import os
     os.chdir(
         os.path.realpath(
@@ -104,6 +104,6 @@ def main(path):
             break
 
 if __name__ == '__main__':
-    # change_path()
-    path = '../main__03.xlsx'
+    file = 'main__03.xlsx'
+    change_path(file)
     main(path)
