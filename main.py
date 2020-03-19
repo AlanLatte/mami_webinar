@@ -53,9 +53,9 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
     print(answer)
     return answer['eventSessionId'], answer['link']
 
-def main(path):
+def main(file):
     id      = 0
-    wb      = load_workbook(path)
+    wb      = load_workbook(file)
     sheet  = wb['Worksheet']
     row     = 2
     while True:
@@ -93,7 +93,7 @@ def main(path):
             email           =   email
         )
 
-        write_data(sheet=sheet, wb=wb, event_session_id=eventsessionID, link=link, room=ROOMS[id][1], row=row, path=path)
+        write_data(sheet=sheet, wb=wb, event_session_id=eventsessionID, link=link, room=ROOMS[id][1], row=row, file=file)
 
         if id+1 == len(ROOMS):
             id = 0
@@ -106,4 +106,4 @@ def main(path):
 if __name__ == '__main__':
     file = 'main__03.xlsx'
     change_path(file)
-    main(path)
+    main(file)
