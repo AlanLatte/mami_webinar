@@ -13,7 +13,6 @@ def read_row_from_exel(sheet_, row):
     output_data.append(int(time[0]))
     output_data.append(int(time[1]))
     output_data.append(int(time[2]))
-    output_data.append(sheet_.cell(row = row, column = 1).value)                        #дата
     output_data.append(sheet_.cell(row = row, column = 3).value)                        #name
     output_data.append(sheet_.cell(row = row, column = 4).value)                        #email
     output_data.append(sheet_.cell(row = row, column = 6).value)                        #subject
