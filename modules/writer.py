@@ -1,13 +1,17 @@
-import openpyxl
+from openpyxl import load_workbook
+from openpyxl import Workbook
 
-# def write_data(sheet_, wb, event_session_id, link, room, row, path):
-#     sheet_.cell(row = row, column = 9).value = link
-#     sheet_.cell(row = row, column = 10).value = room
-#     sheet_.cell(row = row, column = 15).value = event_session_id
-#     wb.save(path)
+def write_data(sheet_, wb, event_session_id, link, room, row, file):
+    sheet_.cell(row = row, column = 9).value = link
+    sheet_.cell(row = row, column = 10).value = room
+    sheet_.cell(row = row, column = 15).value = event_session_id
+    wb.save(file)
 
 
-def write_data(data: lits):
+def merge_workbook(data: list, name: str):
+    wb = Workbook()
+    sheet = wb['Worksheet']
     for row, object  in enumerate(data):
         for column, sub_obj in enumerate(object):
-            sheet_.cell(row = row, column=column).value = sub_obj
+            sheet_cell(row = row, column = column).value = sub_obj
+    wb.save(filename = str(name))
