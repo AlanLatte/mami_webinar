@@ -5,6 +5,7 @@ from common import ROOMS
 from common import HEADERS as headers
 from registrator import register_to_vebinar
 from time_manager import conver_time
+from writer import write_data
 
 def change_path():
     import os
@@ -56,7 +57,7 @@ def main(path):
     id      = 0
     wb      = load_workbook(path)
     sheet_  = wb['Worksheet']
-    row     = 5
+    row     = 2
     while True:
         year, month, day = conver_time(sheet_.cell(row = row, column = 1).value)
         name    = sheet_.cell(row = row, column = 3).value
@@ -92,10 +93,7 @@ def main(path):
             email           =   email
         )
 
-        sheet_.cell(row = row, column = 15).value = event_session_id
-        sheet_.cell(row = row, column = 9).value = link
-        sheet_.cell(row = row, column = 10).value = ROOMS[id][1]
-        wb.save(path)
+        write_data(sheet_=heet_, wb=wb, eventsessionID=eventsessionID, link=link, room=ROOMS[id][1], row=row, path=path)
 
         if id+1 == len(ROOMS):
             id = 0
@@ -106,6 +104,6 @@ def main(path):
             break
 
 if __name__ == '__main__':
-    change_path()
-    path = 'main__01.xlsx'
+    # change_path()
+    path = '../main__03.xlsx'
     main(path)
