@@ -56,14 +56,14 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
 def main(path):
     id      = 0
     wb      = load_workbook(path)
-    sheet_  = wb['Worksheet']
+    sheet  = wb['Worksheet']
     row     = 2
     while True:
-        year, month, day = converter_time(sheet_.cell(row = row, column = 1).value)
-        name    = sheet_.cell(row = row, column = 3).value
-        email   = sheet_.cell(row = row, column = 4).value
-        subject = sheet_.cell(row = row, column = 6).value
-        start_t = str(sheet_.cell(row=row, column=7).value).split(':')
+        year, month, day = converter_time(sheet.cell(row = row, column = 1).value)
+        name    = sheet.cell(row = row, column = 3).value
+        email   = sheet.cell(row = row, column = 4).value
+        subject = sheet.cell(row = row, column = 6).value
+        start_t = str(sheet.cell(row=row, column=7).value).split(':')
 
         print(year, month, day,name,email,subject, start_t)
 
@@ -93,14 +93,14 @@ def main(path):
             email           =   email
         )
 
-        write_data(sheet_=sheet_, wb=wb, event_session_id=eventsessionID, link=link, room=ROOMS[id][1], row=row, path=path)
+        write_data(sheet=sheet, wb=wb, event_session_id=eventsessionID, link=link, room=ROOMS[id][1], row=row, path=path)
 
         if id+1 == len(ROOMS):
             id = 0
         else:
             id += 1
         row += 1
-        if sheet_.cell(row = row, column = 1).value == None:
+        if sheet.cell(row = row, column = 1).value == None:
             break
 
 if __name__ == '__main__':
