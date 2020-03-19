@@ -5,8 +5,6 @@ get_abs_path_folder = lambda folder_name: os.path.join(os.getcwd(),\
 
 INPUT_DIR_PATH = get_abs_path_folder(folder_name="input")
 OUTPUT_DIR_PATH = get_abs_path_folder(folder_name="output")
-print(INPUT_DIR_PATH)
-print(OUTPUT_DIR_PATH)
 
 HEADERS = {
             'content-type' : 'application/x-www-form-urlencoded',

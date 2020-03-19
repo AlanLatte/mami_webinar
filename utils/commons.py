@@ -21,4 +21,7 @@ def start_to_vebinar(eventSessionId):
     url     = f' https://userapi.webinar.ru/v3/eventsessions/{str(eventSessionId)}/start'
     answer  = requests.put(url, headers=headers)
 
+print("create_workbook need some params!")
+sys.exit()
+
 print(json_with_users())

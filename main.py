@@ -6,6 +6,7 @@ from modules.consts.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_time
 from modules.writer import write_data
+from modules.writer import create_workbook
 from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
 from modules.registrator import register_to_vebinar
@@ -27,10 +28,10 @@ def main():
     for i in info:
         print(i)
 
-    for params in info:
-        event_id = create_event(params, ROOMS[0][0])
-        event_session_id = create_event_session(params, event_id)
-        register_to_vebinar(event_session_id, params[3], params[4])
+    # for params in info:
+    #     event_id = create_event(params, ROOMS[0][0])
+    #     event_session_id = create_event_session(params, event_id)
+        # register_to_vebinar(event_session_id, params[3], params[4])
 
     # id: 7
 
@@ -41,8 +42,9 @@ def main():
             one.append(params)
         else:
             two.append(params)
+    create_workbook(data = one, name="1.xlsx")
+    create_workbook(data = two, name="2.xlsx")
 
-    
 
 
 if __name__ == '__main__':
