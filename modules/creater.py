@@ -1,6 +1,3 @@
-# приходит dict
-# вовзарщаю name, user_id, year, month, day, hour_s, minut_s
-
 def create_event(params: dict):
     url     =   'https://userapi.webinar.ru/v3/events'
     body    =   {
