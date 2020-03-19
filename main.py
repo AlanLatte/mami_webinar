@@ -5,7 +5,7 @@ from modules.common import ROOMS
 from modules.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_time
-# from modules.writer import write_data
+from modules.writer import write_data
 from modules.reader import read_all_info
 
 def change_path(file: str) -> None:
