@@ -20,7 +20,7 @@ def create_workbook(data: list, name: str, params: dict):
     elif params['type'] == "local":
         TITLE = tuple("Дата", "ID", "Преподаватель ФИО",\
             "Почта преподавателя", "Телефон преподавателя",\
-            "Название предмета", "Ссылка",\
+            "Название предмета", "Время с", "Время по", "Ссылка",\
             "Вебинарная комната", "Группы")
     else:
         print("create_workbook need some params!")
