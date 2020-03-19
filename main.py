@@ -7,6 +7,8 @@ from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_time
 from modules.writer import write_data
 from modules.reader import read_all_info
+from modules.creater import create_event, create_event_session
+from modules.registrator import register_to_vebinar
 
 def change_path(file: str) -> None:
     import os
@@ -21,11 +23,15 @@ def change_path(file: str) -> None:
 def main():
     id = 0
     info = read_all_info()
-    print(info)
+    info = sorted(info, key=lambda info: info[6], reverse = False)
+    for i in info:
+        print(i)
+        
     for params in info:
         event_id = create_event(params, ROOMS[0][0])
         event_session_id = create_event_session(params, event_id)
         register_to_vebinar(event_session_id, params[3], params[4])
+
 
 
 
