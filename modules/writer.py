@@ -1,7 +1,7 @@
 import os
 from openpyxl import load_workbook
 from openpyxl import Workbook
-OUTPUT_DIR_PATH = "../output"
+from modules.consts.common import OUTPUT_DIR_PATH
 
 def write_data(sheet_, wb, event_session_id, link, room, row, path):
     sheet_.cell(row = row, column = 9).value = link
