@@ -6,8 +6,8 @@ def create_event(params, user_id):
                     'startsAt[date][year]'  :   str(params[0]),
                     'startsAt[date][month]' :   str(params[1]),
                     'startsAt[date][day]'   :   str(params[2]),
-                    'startsAt[time][hour]'  :   str(params[6][0]),
-                    'startsAt[time][minute]':   str(params[6][1]),
+                    'startsAt[time][hour]'  :   str(params[6].split(':')[0]),
+                    'startsAt[time][minute]':   str(params[6].split(':')[1]),
                     'lectorids'             :   str(user_id),
                     'ownerId'               :   str(user_id),
                     'type'                  :   'webinar',
@@ -25,8 +25,8 @@ def create_event_session(params, event_id):
                     'startsAt[date][year]'  :   str(params[0]),
                     'startsAt[date][month]' :   str(params[1]),
                     'startsAt[date][day]'   :   str(params[2]),
-                    'startsAt[time][hour]'  :   str(params[6][0]),
-                    'startsAt[time][minute]':   str(params[6][1]),
+                    'startsAt[time][hour]'  :   str(params[6].split(':')[0]),
+                    'startsAt[time][minute]':   str(params[6].split(':')[1]),
                 }
 
     answer = requests.post(url, data=body, headers=headers).json()
