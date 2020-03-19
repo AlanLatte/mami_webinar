@@ -42,9 +42,10 @@ def main():
             one.append(params)
         else:
             two.append(params)
-    create_workbook(data = one, name="1.xlsx")
-    create_workbook(data = two, name="2.xlsx")
-
+            
+    create_workbook(data = one, name = "1.xlsx", params={"type": "stud"})
+    create_workbook(data = two, name = "2.xlsx", params={"type": "stud"})
+    create_workbook(data = info, name = "info.xlsx", params={"type":"dev"})
 
 
 if __name__ == '__main__':
