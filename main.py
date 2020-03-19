@@ -93,7 +93,7 @@ def main(path):
             email           =   email
         )
 
-        write_data(sheet_=heet_, wb=wb, eventsessionID=eventsessionID, link=link, room=ROOMS[id][1], row=row, path=path)
+        write_data(sheet_=sheet_, wb=wb, event_session_id=eventsessionID, link=link, room=ROOMS[id][1], row=row, path=path)
 
         if id+1 == len(ROOMS):
             id = 0
