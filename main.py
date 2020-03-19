@@ -26,13 +26,15 @@ def main():
     info = sorted(info, key=lambda info: info[6], reverse = False)
     for i in info:
         print(i)
-        
+
     for params in info:
         event_id = create_event(params, ROOMS[0][0])
         event_session_id = create_event_session(params, event_id)
         register_to_vebinar(event_session_id, params[3], params[4])
 
+    # id: 7
 
+    id: 7
 
 
 if __name__ == '__main__':
