@@ -5,7 +5,8 @@ from modules.common import ROOMS
 from modules.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_time
-from modules.writer import write_data
+# from modules.writer import write_data
+from modules.reader import read_all_info
 
 def change_path(file: str) -> None:
     import os
@@ -53,57 +54,18 @@ def create_event_session(event_id, name, year, month, day, hour_s, minute_s):
     print(answer)
     return answer['eventSessionId'], answer['link']
 
-def main(file):
-    id      = 0
-    wb      = load_workbook(file)
-    sheet  = wb['Worksheet']
-    row     = 2
-    while True:
-        year, month, day = converter_time(sheet.cell(row = row, column = 1).value)
-        name    = sheet.cell(row = row, column = 3).value
-        email   = sheet.cell(row = row, column = 4).value
-        subject = sheet.cell(row = row, column = 6).value
-        start_t = str(sheet.cell(row=row, column=7).value).split(':')
+def main():
+    id = 0
+    info = read_all_info()
+    print(info)
+    for params in info:
+        event_id = create_event(params, ROOMS[0][0])
+        event_session_id = create_event_session(params, event_id)
+        register_to_vebinar(event_session_id, params[3], params[4])
 
-        print(year, month, day,name,email,subject, start_t)
 
-        event_id    = create_event(
-            name    =   subject,
-            user_id =   ROOMS[id][0],
-            year    =   int(year),
-            month   =   int(month),
-            day     =   int(day),
-            hour_s  =   int(start_t[0]),
-            minut_s =   int(start_t[1])
-        )
-
-        event_session_id, link  = create_event_session(
-            event_id    =   event_id,
-            name        =   subject,
-            year        =   int(year),
-            month       =   int(month),
-            day         =   int(day),
-            hour_s      =   int(start_t[0]),
-            minute_s    =   int(start_t[1])
-        )
-
-        register_to_vebinar(
-            eventsessionID  =   event_session_id,
-            name            =   name,
-            email           =   email
-        )
-
-        write_data(sheet=sheet, wb=wb, event_session_id=eventsessionID, link=link, room=ROOMS[id][1], row=row, file=file)
-
-        if id+1 == len(ROOMS):
-            id = 0
-        else:
-            id += 1
-        row += 1
-        if sheet.cell(row = row, column = 1).value == None:
-            break
 
 if __name__ == '__main__':
-    file = 'main__03.xlsx'
-    change_path(file)
-    main(file)
+    # file = 'main__03.xlsx'
+    # change_path(file)
+    main()
