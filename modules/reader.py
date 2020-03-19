@@ -7,8 +7,9 @@ directory = '../input'
 
 
 def read_row_from_exel(sheet_, row):
-    # output_data = converter_time(sheet_.cell(row = row, column = 1).value)            #year, month, day
-    output_data = [2020, 3]
+    output_data = []
+    output_data.append(converter_time(sheet_.cell(row = row, column = 1).value))            #year, month, day
+    # output_data = [2020, 3]
     output_data.append(sheet_.cell(row = row, column = 1).value)                        #дата
     output_data.append(sheet_.cell(row = row, column = 3).value)                        #name
     output_data.append(sheet_.cell(row = row, column = 4).value)                        #email
