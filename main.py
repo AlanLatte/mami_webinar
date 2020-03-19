@@ -34,7 +34,15 @@ def main():
 
     # id: 7
 
-    id: 7
+    one = []
+    two = []
+    for params in info:
+        if params[7] == 'Коломна':
+            one.append(params)
+        else:
+            two.append(params)
+
+    
 
 
 if __name__ == '__main__':
