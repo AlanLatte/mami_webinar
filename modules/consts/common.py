@@ -1,14 +1,16 @@
 import os
 
-get_abs_path_folder = lambda folder_name: os.path.join(os.getcwd(),\
-    str(folder_name))
+
+def get_abs_path_folder(folder_name):
+    return os.path.join(os.getcwd(), str(folder_name))
 
 INPUT_DIR_PATH = get_abs_path_folder(folder_name="input")
 OUTPUT_DIR_PATH = get_abs_path_folder(folder_name="output")
 
 HEADERS = {
-            'content-type' : 'application/x-www-form-urlencoded',
-            'x-auth-token' : '62c679c0340cd0b1aca7b34099384f54'}
+            'content-type': 'application/x-www-form-urlencoded',
+            'x-auth-token': '62c679c0340cd0b1aca7b34099384f54',
+            }
 ROOMS = [
             (19396587, 'W000'),
             (19396923, 'W001'),

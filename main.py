@@ -11,6 +11,7 @@ from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
 from modules.registrator import register_to_vebinar
 
+
 def change_path(file: str) -> None:
     import os
     os.chdir(
@@ -20,6 +21,7 @@ def change_path(file: str) -> None:
             )
         )
     )
+
 
 def main():
     id = 0
@@ -42,14 +44,12 @@ def main():
             one.append(params)
         else:
             two.append(params)
-            
-    create_workbook(data = one, name = "1.xlsx", params={"type": "stud"})
-    create_workbook(data = two, name = "2.xlsx", params={"type": "stud"})
-    create_workbook(data = info, name = "info.xlsx", params={"type":"dev"})
+
+    create_workbook(data=one, name="info_stud.xlsx", params={"type": "stud"})
+    create_workbook(data=info, name="info_dev.xlsx", params={"type": "dev"})
 
 
 if __name__ == '__main__':
     # file = 'main__03.xlsx'
     # change_path(file)
     main()
-    pass
