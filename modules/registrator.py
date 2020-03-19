@@ -1,4 +1,4 @@
-from modules.common import HEADERS as headers
+from modules.consts.common import HEADERS as headers
 import requests
 
 def register_to_vebinar(eventsessionID, name, email):

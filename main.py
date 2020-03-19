@@ -1,8 +1,8 @@
 import requests
 import json
 from openpyxl import load_workbook
-from modules.common import ROOMS
-from modules.common import HEADERS as headers
+from modules.consts.common import ROOMS
+from modules.consts.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_time
 from modules.writer import write_data

@@ -1,3 +1,11 @@
+import os
+
+get_abs_path_folder = lambda folder_name: os.path.join(
+    os.path.dirname(os.getcwd()), str(folder_name))
+
+INPUT_FILE_PATH = get_abs_path_folder(folder_name="input")
+OUTPUT_FILE_PATH = get_abs_path_folder(folder_name="output")
+
 HEADERS = {
             'content-type' : 'application/x-www-form-urlencoded',
             'x-auth-token' : '62c679c0340cd0b1aca7b34099384f54'}
