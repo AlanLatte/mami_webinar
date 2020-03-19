@@ -1,11 +1,11 @@
 import requests
 import json
 from openpyxl import load_workbook
-from common import ROOMS
-from common import HEADERS as headers
-from registrator import register_to_vebinar
-from time_manager import conver_time
-from writer import write_data
+from modules.common import ROOMS
+from modules.common import HEADERS as headers
+from modules.registrator import register_to_vebinar
+from modules.time_manager import converter_time
+from modules.writer import write_data
 
 def change_path():
     import os
@@ -59,7 +59,7 @@ def main(path):
     sheet_  = wb['Worksheet']
     row     = 2
     while True:
-        year, month, day = conver_time(sheet_.cell(row = row, column = 1).value)
+        year, month, day = converter_time(sheet_.cell(row = row, column = 1).value)
         name    = sheet_.cell(row = row, column = 3).value
         email   = sheet_.cell(row = row, column = 4).value
         subject = sheet_.cell(row = row, column = 6).value
