@@ -1,3 +1,6 @@
+from .consts.common import HEADERS as headers
+
+
 def create_event(params):
     url = 'https://userapi.webinar.ru/v3/events'
     body = {
