@@ -29,11 +29,9 @@ def main(mode: str):
     info = sorted(info, key=lambda info: info[1], reverse = False)
     # TODO: сделать функцию сортировки, которая будет полволять
     # пропустить 0 в начале
-    for i in info:
-        print(i[0])
-
+    info = [i[0] for i in info]
+    print(info)
     for row_info in info:
-        row_info = row_info[0]
         row_info['user_id'] = ROOMS[id][0]
         row_info['room'] = ROOMS[id][1]
         if mode == 'online':
@@ -44,7 +42,22 @@ def main(mode: str):
         else:
             row_info['link'] = 'test'
 
+        id+=1
+        if id == len(ROOMS):
+            id = 0
+
     create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'dev'})
+    result_books_names = []
+    for file_name in id_to_book.values():
+        if file_name not in result_books_names:
+            result_books_names.append(file_name)
+            temp_list = []
+            for row in info:
+                if id_to_book[row['id']] == file_name:
+                    temp_list.append(row)
+            create_workbook(data=temp_list, name=f'результат_{file_name}', params={'type':'stud'})
+
+
     # one = []
     # two = []
     # for row_info in info:
