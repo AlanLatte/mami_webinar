@@ -27,7 +27,10 @@ def create_workbook(data: dict, name: str, params: dict):
     else:
         print("create_workbook need some params!")
         sys.exit()
-    OUTPUT_FILE_PATH = f"{OUTPUT_DIR_PATH}/{name}"
+    OUTPUT_FILE_PATH = os.path.join(OUTPUT_FILE_PATH, name)
+
+    data = formating_data(data, params)
+
     if name not in os.listdir(OUTPUT_DIR_PATH):
         work_book = Workbook()
         work_book.save(filename=str(OUTPUT_FILE_PATH))
@@ -45,3 +48,23 @@ def create_workbook(data: dict, name: str, params: dict):
                     row=int(row)+2, column=int(column)+1
                 ).value = sub_obj
     work_book.save(filename=str(OUTPUT_FILE_PATH))
+
+
+def formating_data(data:dict, params:dict):
+    if params['type'] == "dev":
+        data = list(
+                    data['date'],
+                    data['id'],
+                    data['name'],
+                    data['email'],
+                    data['phone_number'],
+                    data['subject'],
+                    data['start_t'],
+                    data['end_time'],
+                    data['link']
+                    data['room']
+                    data['group'],
+                   )
+    else:
+        data = list(data)
+    return data
