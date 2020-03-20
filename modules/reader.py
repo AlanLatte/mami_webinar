@@ -5,6 +5,7 @@ import os
 
 
 def read_row_from_exel(sheet, row):
+    start_t = str(sheet.cell(row=row, column=7).value)
     CELLS = {
         "date": converter_time(sheet.cell(row=row, column=1).value),
         "id": str(sheet.cell(row=row, column=2).value),
@@ -12,7 +13,7 @@ def read_row_from_exel(sheet, row):
         "email": sheet.cell(row=row, column=4).value,
         "phone_number": sheet.cell(row=row, column=5).value,
         "subject": sheet.cell(row=row, column=6).value,
-        "start_t": str(sheet.cell(row=row, column=7).value).split(':'),
+        "start_t": start_t.split(':'),
         "end_time": str(sheet.cell(row=row, column=8).value),
         "group": str(sheet.cell(row=row, column=11).value),
     }
