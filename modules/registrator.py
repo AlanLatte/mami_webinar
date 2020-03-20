@@ -10,7 +10,7 @@ def register_to_vebinar(eventsessionID, name, email):
         if names[id] == '' or emails[id] == '':
             continue
         body = {'name': str(names[id]),
-                'role': 'LECTURER',
+                'role': 'ADMIN',
                 'email': str(emails[id]), }
         print(requests.post(url, data=body, headers=headers).json())
 

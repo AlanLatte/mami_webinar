@@ -23,33 +23,40 @@ def change_path(file: str) -> None:
     )
 
 
-def main():
+def main(mode: str):
     id = 0
-    info = read_all_info()
-    info = sorted(info, key=lambda info: info[6], reverse = False)
+    info, id_to_book = read_all_info()
+    info = sorted(info, key=lambda info: info[1], reverse = False)
+    # TODO: сделать функцию сортировки, которая будет полволять
+    # пропустить 0 в начале
     for i in info:
-        print(i)
+        print(i[0])
 
-    # for params in info:
-    #     event_id = create_event(params, ROOMS[0][0])
-    #     event_session_id = create_event_session(params, event_id)
-        # register_to_vebinar(event_session_id, params[3], params[4])
-
-    # id: 7
-
-    one = []
-    two = []
-    for params in info:
-        if params[7] == 'Коломна':
-            one.append(params)
+    for row_info in info:
+        row_info = row_info[0]
+        row_info['user_id'] = ROOMS[id][0]
+        row_info['room'] = ROOMS[id][1]
+        if mode == 'online':
+            event_id = create_event(row_info)
+            event_session_id, row_info['link'] = \
+                create_event_session(row_info, event_id)
+            register_to_vebinar(eventsessionID=event_session_id, name=row_info['name'], email=row_info['email'])
         else:
-            two.append(params)
+            row_info['link'] = 'test'
 
-    create_workbook(data=one, name="info_stud.xlsx", params={"type": "stud"})
-    create_workbook(data=info, name="info_dev.xlsx", params={"type": "dev"})
+    create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'dev'})
+    # one = []
+    # two = []
+    # for row_info in info:
+    #     if row_info[7] == 'Коломна':
+    #         one.append(row_info)
+    #     else:
+    #         two.append(row_info)
+    #
+    # create_workbook(data=one, name="info_stud.xlsx", params={"type": "stud"})
+    # create_workbook(data=info, name="info_dev.xlsx", params={"type": "dev"})
 
 
 if __name__ == '__main__':
-    # file = 'main__03.xlsx'
     # change_path(file)
-    main()
+    main('offline')

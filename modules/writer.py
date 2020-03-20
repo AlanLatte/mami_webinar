@@ -12,7 +12,7 @@ def write_data(sheet, wb, event_session_id, link, room, row, path):
     wb.save(path)
 
 
-def create_workbook(data: list, name: str, params: dict):
+def create_workbook(data: dict, name: str, params: dict):
     if params['type'] == "dev":
         header = (
             "Дата", "ID", "Преподаватель ФИО",
@@ -37,8 +37,7 @@ def create_workbook(data: list, name: str, params: dict):
     if sheet_names.__len__() == 1:
         sheet = work_book[sheet_names[0]]
         for column, title_object in enumerate(header):
-            sheet.cell(row=int(1), column=int(column)+1).value =\
-                title_object
+            sheet.cell(row=int(1), column=int(column)+1).value = title_object
 
         for row, data_object in enumerate(data):
             for column, sub_obj in enumerate(data_object):
