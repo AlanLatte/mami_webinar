@@ -35,12 +35,14 @@ def main(mode: str):
         row_info['user_id'] = ROOMS[id][0]
         row_info['room'] = ROOMS[id][1]
         if mode == 'online':
-            event_id = create_event(row_info)
-            event_session_id, row_info['link'] = \
-                create_event_session(row_info, event_id)
-            register_to_vebinar(eventsessionID=event_session_id, name=row_info['name'], email=row_info['email'])
+            row_info['event_id'] = create_event(row_info)
+            row_info['event_session_id'], row_info['link'] = \
+                create_event_session(row_info, row_info['event_id'])
+            register_to_vebinar(eventsessionID=row_info['event_session_id'], name=row_info['name'], email=row_info['email'])
         else:
-            row_info['link'] = 'test'
+            row_info['event_id']            = 'test'
+            row_info['event_session_id']    = 'test'
+            row_info['link']                = 'test'
 
         id+=1
         if id == len(ROOMS):
@@ -72,4 +74,4 @@ def main(mode: str):
 
 if __name__ == '__main__':
     # change_path(file)
-    main('offline')
+    main('online')

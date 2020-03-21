@@ -18,12 +18,12 @@ def create_workbook(data: list, name: str, params: dict):
             "Дата", "ID", "Преподаватель ФИО",
             "Почта преподавателя", "Телефон преподавателя",
             "Название предмета", "Время с", "Время по", "Ссылка",
-            "Вебинарная комната", "Группы")
+            "Вебинарная комната", "Группы", 'event_id', 'event_session_id')
 
     elif params['type'] == "stud":
         HEADER = (
             "Дата", "ID", "Преподаватель ФИО",
-            "Название предмета", "Время с", "Время по", "Ссылка")
+            "Название предмета", "Время с", "Время по", "Ссылка", "Группа")
     else:
         print("create_workbook need some params!")
         sys.exit()
@@ -65,7 +65,9 @@ def formating_data(data:list, params:dict):
                                row['end_time'],
                                row['link'],
                                row['room'],
-                               row['group']])
+                               row['group'],
+                               row['event_id'],
+                               row['event_session_id']])
     else:
         for row in data:
             list_data.append([
@@ -76,5 +78,6 @@ def formating_data(data:list, params:dict):
                                 ':'.join(row['start_t']),
                                 row['end_time'],
                                 row['link'],
+                                row['group'],
                              ])
     return list_data
