@@ -1,4 +1,4 @@
-from modules.time_manager import converter_time
+converter_datefrom modules.time_manager import converter_date
 from openpyxl import load_workbook
 from .consts.common import INPUT_DIR_PATH
 import os
@@ -7,7 +7,7 @@ import os
 def read_row_from_exel(sheet, row):
     start_t = str(sheet.cell(row=row, column=7).value)
     CELLS = {
-        "date": converter_time(sheet.cell(row=row, column=1).value),
+        "date": converter_date(sheet.cell(row=row, column=1).value),
         "id": str(sheet.cell(row=row, column=2).value),
         "name": sheet.cell(row=row, column=3).value,
         "email": sheet.cell(row=row, column=4).value,

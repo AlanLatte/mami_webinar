@@ -1,3 +1,3 @@
-def converter_time(time):
-    time_ = str(time).split("-")
-    return [time_[0], time_[1], time_[2]]
+def converter_date(date):
+    date_ = str(date).split("-")
+    return [date_[0], date_[1], date_[2]]

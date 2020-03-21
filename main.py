@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 from modules.consts.common import ROOMS
 from modules.consts.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
-from modules.time_manager import converter_time
+from modules.time_manager import converter_date
 from modules.writer import write_data
 from modules.writer import create_workbook
 from modules.reader import read_all_info
