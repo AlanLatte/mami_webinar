@@ -6,11 +6,11 @@ def create_event(params):
     body = {
                 'name': str(params['subject']),
                 'access': '1',
-                'startsAt[date][year]': str(papams['date'][0]),
-                'startsAt[date][month]': str(params['date'][1]),
-                'startsAt[date][day]': str(params['date'][2]),
-                'startsAt[time][hour]': str(params['start_t'][0]),
-                'startsAt[time][minute]': str(params['start_t'][1]),
+                'startsAt[date][year]': str(int(papams['date'][0])),
+                'startsAt[date][month]': str(int(params['date'][1])),
+                'startsAt[date][day]': str(int(params['date'][2])),
+                'startsAt[time][hour]': str(int(params['start_t'][0])),
+                'startsAt[time][minute]': str(int(params['start_t'][1])),
                 'lectorids': str(params['user_id']),
                 'ownerId': str(params['user_id']),
                 'type': 'webinar',
@@ -26,11 +26,11 @@ def create_event_session(params, event_id):
                 'name': str(params['subject']),
                 'access': '1',
                 'lang': 'RU',
-                'startsAt[date][year]': str(papams['date'][0]),
-                'startsAt[date][month]': str(params['date'][1]),
-                'startsAt[date][day]': str(params['date'][2]),
-                'startsAt[time][hour]': str(params['start_t'][0]),
-                'startsAt[time][minute]': str(params['start_t'][1]),
+                'startsAt[date][year]': str(int(papams['date'][0])),
+                'startsAt[date][month]': str(int(params['date'][1])),
+                'startsAt[date][day]': str(int(params['date'][2])),
+                'startsAt[time][hour]': str(int(params['start_t'][0])),
+                'startsAt[time][minute]': str(int(params['start_t'][1])),
             }
 
     answer = requests.post(url, data=body, headers=headers).json()
