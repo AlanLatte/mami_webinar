@@ -4,7 +4,7 @@ from .consts.common import HEADERS as headers
 def create_event(params):
     url = 'https://userapi.webinar.ru/v3/events'
     body = {
-                'name': str(params['name']),
+                'name': str(params['subject']),
                 'access': '1',
                 'startsAt[date][year]': str(papams['date'][0]),
                 'startsAt[date][month]': str(params['date'][1]),
@@ -23,7 +23,7 @@ def create_event(params):
 def create_event_session(params, event_id):
     url = f'https://userapi.webinar.ru/v3/events/{str(event_id)}/sessions'
     body = {
-                'name': str(params['name']),
+                'name': str(params['subject']),
                 'access': '1',
                 'lang': 'RU',
                 'startsAt[date][year]': str(papams['date'][0]),
