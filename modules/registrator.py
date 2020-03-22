@@ -25,11 +25,10 @@ def register_to_vebinar(eventsessionID, params, mode):
             if mode == 'online':
                 print(requests.post(url, data=body, headers=headers).json())
             else:
-                print(f"   Регистрация успешна {str(names[id])},
-                \email {str(emails[id])}")
+                print(f"   Регистрация успешна {str(names[id])},\
+                email {str(emails[id])}")
         except:
-            print(f"   Произошла ошибка регистрации для пользователя {str(names[id])},\
-             email {str(emails[id])}")
+            print(f"   Произошла ошибка регистрации пользователя")
 
 
 def name_refactor(name):
