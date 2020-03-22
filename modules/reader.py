@@ -1,4 +1,5 @@
 from modules.time_manager import converter_date
+from modules.time_manager import converter_time
 from openpyxl import load_workbook
 from .consts.common import INPUT_DIR_PATH
 import os
@@ -13,7 +14,7 @@ def read_row_from_exel(sheet, row):
         "email": sheet.cell(row=row, column=4).value,
         "phone_number": sheet.cell(row=row, column=5).value,
         "subject": sheet.cell(row=row, column=6).value,
-        "start_t": start_t.split(':'),
+        "start_t": converter_time(time=start_t),
         "end_time": str(sheet.cell(row=row, column=8).value),
         "group": str(sheet.cell(row=row, column=11).value),
     }
