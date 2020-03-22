@@ -28,15 +28,17 @@ def main(mode: str) -> None:
     for row_info in info:
         row_info['user_id'] = ROOMS[id][0]
         row_info['room'] = ROOMS[id][1]
+
         if mode == 'online':
             row_info['event_id'] = create_event(row_info)
             row_info['event_session_id'], row_info['link'] = \
                 create_event_session(row_info, row_info['event_id'])
-            register_to_vebinar(eventsessionID=row_info['event_session_id'], name=row_info['name'], email=row_info['email'])
         else:
             row_info['event_id'] = 'test'
             row_info['event_session_id'] = 'test'
             row_info['link'] = 'test'
+
+        register_to_vebinar(eventsessionID=row_info['event_session_id'], params=row_info, mode=mode)
 
         id+=1
         if id == len(ROOMS):
