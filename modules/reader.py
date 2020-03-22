@@ -1,4 +1,4 @@
-converter_datefrom modules.time_manager import converter_date
+from modules.time_manager import converter_date
 from openpyxl import load_workbook
 from .consts.common import INPUT_DIR_PATH
 import os
