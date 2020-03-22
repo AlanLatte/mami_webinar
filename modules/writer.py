@@ -14,16 +14,13 @@ def write_data(sheet, wb, event_session_id, link, room, row, path):
 
 def create_workbook(data: list, name: str, params: dict):
     if params['type'] == "private":
-        HEADER = (
-            "Дата", "ID", "Преподаватель ФИО",
-            "Почта преподавателя", "Телефон преподавателя",
-            "Название предмета", "Время с", "Время по", "Ссылка",
-            "Вебинарная комната", "Группы", 'event_id', 'event_session_id')
+        HEADER = WORKBOOK_HEADER_PRIVATE
 
     elif params['type'] == "public":
         HEADER = (
             "Дата", "ID", "Преподаватель ФИО",
-            "Название предмета", "Время с", "Время по", "Ссылка", "Группа")
+            "Название предмета", "Время с", "Время по", "Ссылка", "Группа"
+        )
     else:
         print("create_workbook need some params!")
         sys.exit()
