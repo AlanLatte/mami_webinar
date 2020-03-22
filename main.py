@@ -10,13 +10,18 @@ from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
 from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
+from modules.manager import vebinar_manager
 
 
 def main(mode: str) -> None:
 
     """TODO:
 сделать функцию сортировки, которая будет позволять
-пропустить 0 в начале"""
+пропустить 0 в начале
+
+TODO:
+    статус коды в константах
+"""
 
     id = 0
     info, id_to_book = read_all_info()
@@ -63,4 +68,5 @@ if __name__ == '__main__':
     else:
         print('offline mode on\n')
         main('offline')
+    # vebinar_manager(event_session_id = '3598709', param='stop')
     print(main.__doc__)
