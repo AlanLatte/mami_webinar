@@ -3,15 +3,24 @@ from .consts.common import HEADERS as headers
 
 
 def register_to_vebinar(eventsessionID, name, email):
+
+    """role — роль участника на этом мероприятии. Значения:
+- ADMIN
+- LECTURER
+- GUEST
+    """
+
     url = f'https://userapi.webinar.ru/v3/eventsessions/{str(eventsessionID)}/register'
     names = name_refactor(name)
     emails = email_refactoring(email)
     for id in range(len(names)):
         if names[id] == '' or emails[id] == '':
             continue
-        body = {'name': str(names[id]),
-                'role': 'ADMIN',
-                'email': str(emails[id]), }
+        body = {
+            'name': str(names[id]),
+            'role': 'ADMIN',
+            'email': str(emails[id]),
+        }
         print(requests.post(url, data=body, headers=headers).json())
 
 
