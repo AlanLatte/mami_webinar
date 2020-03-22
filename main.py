@@ -5,30 +5,24 @@ from modules.consts.common import ROOMS
 from modules.consts.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
 from modules.time_manager import converter_date
-from modules.writer import write_data
-from modules.writer import create_workbook
+from modules.writer import write_data, create_workbook
 from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
 from modules.registrator import register_to_vebinar
+from modules.utils.checker import check_required_folders
 
 
-def change_path(file: str) -> None:
-    import os
-    os.chdir(
-        os.path.realpath(
-            os.path.join(
-                os.getcwd(), os.path.dirname(file)
-            )
-        )
-    )
+from modules.consts.common import OUTPUT_DIR_PATH
 
+def main(mode: str) -> None:
 
-def main(mode: str):
+    """TODO:
+сделать функцию сортировки, которая будет позволять
+пропустить 0 в начале"""
+
     id = 0
     info, id_to_book = read_all_info()
     info = sorted(info, key=lambda info: info[1], reverse = False)
-    # TODO: сделать функцию сортировки, которая будет полволять
-    # пропустить 0 в начале
     info = [i[0] for i in info]
     print(info)
     for row_info in info:
@@ -40,15 +34,15 @@ def main(mode: str):
                 create_event_session(row_info, row_info['event_id'])
             register_to_vebinar(eventsessionID=row_info['event_session_id'], name=row_info['name'], email=row_info['email'])
         else:
-            row_info['event_id']            = 'test'
-            row_info['event_session_id']    = 'test'
-            row_info['link']                = 'test'
+            row_info['event_id'] = 'test'
+            row_info['event_session_id'] = 'test'
+            row_info['link'] = 'test'
 
         id+=1
         if id == len(ROOMS):
             id = 0
 
-    create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'dev'})
+    create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'private'})
     result_books_names = []
     for file_name in id_to_book.values():
         if file_name not in result_books_names:
@@ -57,21 +51,11 @@ def main(mode: str):
             for row in info:
                 if id_to_book[row['id']] == file_name:
                     temp_list.append(row)
-            create_workbook(data=temp_list, name=f'результат_{file_name}', params={'type':'stud'})
-
-
-    # one = []
-    # two = []
-    # for row_info in info:
-    #     if row_info[7] == 'Коломна':
-    #         one.append(row_info)
-    #     else:
-    #         two.append(row_info)
-    #
-    # create_workbook(data=one, name="info_stud.xlsx", params={"type": "stud"})
-    # create_workbook(data=info, name="info_dev.xlsx", params={"type": "dev"})
+            create_workbook(data=temp_list, name=f'результат_{file_name}', params={'type':'public'})
 
 
 if __name__ == '__main__':
-    # change_path(file)
-    main('online')
+    check_required_folders()
+    print(OUTPUT_DIR_PATH)
+    # main('online')
+    print(main.__doc__)
