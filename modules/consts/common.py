@@ -1,6 +1,7 @@
 import os
 from modules.utils.path_getter import get_abs_path
 
+
 INPUT_FOLDER = "input"
 OUTPUT_FOLDER = "output"
 
