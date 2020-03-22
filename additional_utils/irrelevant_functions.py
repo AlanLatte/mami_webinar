@@ -3,9 +3,10 @@ import requests
 
 def get_users_json():
     headers = {
-                'content-type' : 'application/x-www-form-urlencoded',
-                'x-auth-token' : '62c679c0340cd0b1aca7b34099384f54'}
-    url     = 'https://userapi.webinar.ru/v3/organization/members'
+        'content-type' : 'application/x-www-form-urlencoded',
+        'x-auth-token' : '62c679c0340cd0b1aca7b34099384f54'
+    }
+    url = 'https://userapi.webinar.ru/v3/organization/members'
     return requests.get(url, headers=headers).json()
 
 
@@ -21,8 +22,8 @@ def json_with_users():
 
 
 def start_to_vebinar(eventSessionId):
-    url     = f' https://userapi.webinar.ru/v3/eventsessions/{str(eventSessionId)}/start'
-    answer  = requests.put(url, headers=headers)
+    url = f' https://userapi.webinar.ru/v3/eventsessions/{str(eventSessionId)}/start'
+    answer = requests.put(url, headers=headers)
 
 
 print(json_with_users())
