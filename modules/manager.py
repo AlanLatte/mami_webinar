@@ -8,17 +8,30 @@ from modules.time_manager import converter_to_datetime
 from datetime import timedelta
 
 
-def manager_controller(date_time: List[List], table_data: dict):
+def manager_controller(
+    date_time: List[List],
+    table_data: dict,
+    param: str):
     """
-    manager_controller() accepts ____ main parameters:
-        date_time: list[list]
-            firts date_time in sub_list parameter must be date
-            second date_time in sub_list parameter must be time
-                expamle:
-                    [
-                        [%Y-%m-%d, %H:%M],
-                        [%Y-%m-%d, %H:%M]
-                    ]
+    manager_controller() accepts 3 main parameters:
+        1.  date_time: list[list]
+                firts date_time in sub_list parameter must be date
+                second date_time in sub_list parameter must be time
+                    expamle:
+                        [
+                            [%Y-%m-%d, %H:%M],
+                            [%Y-%m-%d, %H:%M]
+                        ]
+
+        2.  table_data: dict
+                the following parameters should be in the dictionary:
+                    2.1. 'end_time'
+                    2.2. 'status'
+                    2.3. 'start_time'
+                    2.4  'event_session_id'
+
+        3.  param: str
+                param can be 'start' or 'stop'
     """
 
 
@@ -35,15 +48,13 @@ def manager_controller(date_time: List[List], table_data: dict):
             ) <= (
                 current_time - datetime.timedelta(minute=2)
             ) and row['status'] == 'active':
-                # kill_process()
-                pass
+                vebinar_manager(event_session_id=row['event_session_id'] , param='stop')
             elif (
                 converter_to_datetime(
                     row['start_time']
                 ) - datetime.timedelta(minute=7)
             ) <= current_time and row['status'] == 'inactive':
-                # run_process()
-                pass
+                vebinar_manager(event_session_id=row['event_session_id'], param='start')
             elif (
                 converter_to_datetime(
                     row['start_time']
@@ -71,15 +82,15 @@ def manager_controller(date_time: List[List], table_data: dict):
         else:
             current_time += datetime.timedelta(minute=2)
             control()
-        break
 
 
 def vebinar_manager(event_session_id: str, param: str) -> None:
     """
     vebinar_manager() accepts two main parameters:
-        event_session_id: str,
-        param: str
-            param can be 'start' or 'stop'
+        1.  event_session_id: str,
+        
+        2.  param: str
+                param can be 'start' or 'stop'
     """
     if param not in ["start", "stop"]:
         import sys
