@@ -1,6 +1,7 @@
 import requests
 import datetime
 import sys
+import time
 from tuping import List
 from modules.consts.common import HEADERS as headers
 from modules.time_manager import converter_time
@@ -77,8 +78,7 @@ def manager_controller(
 
     while True:
         if (current_time - datetime.timedelta(minute=2)) < get_start_time(current_time):
-        #sleep(10s)
-            pass
+            time.sleep(10)
         else:
             current_time += datetime.timedelta(minute=2)
             control()
@@ -88,7 +88,7 @@ def vebinar_manager(event_session_id: str, param: str) -> None:
     """
     vebinar_manager() accepts two main parameters:
         1.  event_session_id: str,
-        
+
         2.  param: str
                 param can be 'start' or 'stop'
     """
