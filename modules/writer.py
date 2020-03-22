@@ -4,6 +4,8 @@ from openpyxl import load_workbook
 from openpyxl import Workbook
 from .consts.common import OUTPUT_DIR_PATH
 
+from modules.consts.common import WORKBOOK_HEADER_PRIVATE as header_privaye
+
 
 def write_data(sheet, wb, event_session_id, link, room, row, path):
     sheet.cell(row=row, column=9).value = link
@@ -14,7 +16,7 @@ def write_data(sheet, wb, event_session_id, link, room, row, path):
 
 def create_workbook(data: list, name: str, params: dict):
     if params['type'] == "private":
-        HEADER = WORKBOOK_HEADER_PRIVATE
+        HEADER = header_privaye
 
     elif params['type'] == "public":
         HEADER = (
