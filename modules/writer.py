@@ -56,29 +56,30 @@ def formating_data(data: list, params: dict):
     if params['type'] == "private":
         for row in data:
             list_data.append([
-                               '-'.join(row['date']),
-                               row['id'],
-                               row['name'],
-                               row['email'],
-                               row['phone_number'],
-                               row['subject'],
-                               ':'.join(row['start_t']),
-                               row['end_time'],
-                               row['link'],
-                               row['room'],
-                               row['group'],
-                               row['event_id'],
-                               row['event_session_id']])
+                '-'.join(row['date']),
+                row['id'],
+                row['name'],
+                row['email'],
+                row['phone_number'],
+                row['subject'],
+                ':'.join(row['start_t']),
+                row['end_time'],
+                row['link'],
+                row['room'],
+                row['group'],
+                row['event_id'],
+                row['event_session_id'],
+            ])
     else:
         for row in data:
             list_data.append([
-                                '-'.join(row['date']),
-                                row['id'],
-                                row['name'],
-                                row['subject'],
-                                ':'.join(row['start_t']),
-                                row['end_time'],
-                                row['link'],
-                                row['group'],
-                             ])
+                '-'.join(row['date']),
+                row['id'],
+                row['name'],
+                row['subject'],
+                ':'.join(row['start_t']),
+                row['end_time'],
+                row['link'],
+                row['group'],
+            ])
     return list_data

@@ -58,9 +58,7 @@ def main(mode: str) -> None:
 
 if __name__ == '__main__':
     check_required_folders()
-    print(OUTPUT_DIR_PATH)
-    print('Выбирите режим работы')
-    mode = input()
+    mode = input('Выбирите режим работы: \t')
     if mode == 'online' or mode == '1':
         print('online mode on\n')
         main('online')
