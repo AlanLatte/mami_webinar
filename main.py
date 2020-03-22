@@ -63,8 +63,8 @@ if __name__ == '__main__':
     mode = input()
     if mode == 'online' or mode == '1':
         print('online mode on\n')
-        # main('online')
+        main('online')
     else:
         print('offline mode on\n')
-        # main('oflline')
+        main('offline')
     print(main.__doc__)
