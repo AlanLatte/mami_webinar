@@ -12,8 +12,6 @@ from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
 
 
-from modules.consts.common import OUTPUT_DIR_PATH
-
 def main(mode: str) -> None:
 
     """TODO:
