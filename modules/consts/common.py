@@ -15,7 +15,7 @@ OUTPUT_DIR_PATH = os.path.join(ABS_PATH, OUTPUT_FOLDER)
 API_DIR_PATH = os.path.join(ABS_PATH, API_FOLDER)
 
 
-SPREAD_SHEET_ID = "1e_DqDCwrc3xlTWsXDB-zUuchWSWH_HA6wzogKbXPStE"
+SPREAD_SHEET_ID = "1CjHw8ySYIn2jNR8OT_jWcV_5_Rgs2aSiZmjf3ZhL3Y4"
 CREDENTIALS_FILE = get_google_api_key_path(
                                     os.path.join(API_DIR_PATH, 'google_api')
                                           )
