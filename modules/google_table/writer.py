@@ -41,7 +41,7 @@ def create_virtual_table(title='Сие есть название докумен�
         fileId=spreadsheet['spreadsheetId'],
         body={
             'type': 'anyone',
-            'role': 'reader'
+            'role': 'writer'
         },  # доступ на чтение кому угодно
         fields='id'
     ).execute()
@@ -81,7 +81,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
 def prepair_data(info: list):
     for row in info:
         values = formating_data(info, {'type':'private'})
-        sheet_name = f"Расписание на {values[0][0]}"+'4'
+        sheet_name = f"Расписание на {values[0][0]}"
 
     request = {
         "range": f"{sheet_name}!A1:{chr(64+len(values[0]))}{len(values)}",
