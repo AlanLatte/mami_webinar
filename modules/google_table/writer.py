@@ -3,6 +3,7 @@ import apiclient.discovery
 from oauth2client.service_account import ServiceAccountCredentials
 from modules.writer import formating_data
 from modules.consts.common import SPREAD_SHEET_ID, CREDENTIALS_FILE
+from modules.google_table.checker import check_name
 
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
@@ -52,6 +53,7 @@ def create_virtual_table(title='Сие есть название докумен�
 def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
     request_body, sheet_name = prepair_data(info)
     spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheetID).execute()
+
     append_list = service.spreadsheets().batchUpdate(
         spreadsheetId=spreadsheet['spreadsheetId'],
         body={
@@ -60,7 +62,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
                     'properties': {
                             'sheetType': 'GRID',
                             'sheetId': get_free_sheet_id(spreadsheet),
-                            'title': sheet_name,
+                            'title': check_name(sheet_name=sheet_name, spreadsheet=spreadsheet),
                         }
                     }
                 }
@@ -69,8 +71,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
             "responseIncludeGridData": True
         }
     ).execute()
-
-    print(request_body)
+    
     append_info = service.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheetID, body={
             "valueInputOption": "USER_ENTERED",
