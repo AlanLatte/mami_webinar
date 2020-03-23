@@ -39,6 +39,7 @@ def read_table(spreadsheetId=SPREAD_SHEET_ID, count_of_row_in_request=500):
             info.append({})
             for i, header in enumerate(WORKBOOK_HEADER_PRIVATE):
                 info[-1][header] = value['values'][row_in_responce][i]
+            info[-1]['row'] = row + row_in_responce
         else:
             row += int(count_of_row_in_request)
             continue
