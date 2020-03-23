@@ -12,6 +12,8 @@ from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
 from modules.manager import vebinar_manager
 
+from modules.work_with_google_table.reader import read_from_excel_table
+from modules.work_with_google_table.writer import create_new_sheet_in_table
 
 def main(mode: str) -> None:
 
@@ -60,13 +62,26 @@ TODO:
 
 
 if __name__ == '__main__':
-    check_required_folders()
-    mode = input('Выбирите режим работы: \t')
-    if mode == 'online' or mode == '1':
-        print('online mode on\n')
-        main('online')
-    else:
-        print('offline mode on\n')
-        main('offline')
+    # check_required_folders()
+    # mode = input('Выбирите режим работы: \t')
+    # if mode == 'online' or mode == '1':
+    #     print('online mode on\n')
+    #     main('online')
+    # else:
+    #     print('offline mode on\n')
+    #     main('offline')
+    info, id_to_book = read_all_info()
+    info = sorted(info, key=lambda info: info[1], reverse = False)
+    info = [i[0] for i in info]
+    print(info)
+    for row_info in info:
+        row_info['user_id'] = 'test'
+        row_info['room'] = 'test'
+        row_info['event_id'] = 'test'
+        row_info['event_session_id'] = 'test'
+        row_info['link'] = 'test'
+
+    print(read_from_excel_table())
+    # create_new_sheet_in_table(info=info)
     # vebinar_manager(event_session_id = '3598709', param='stop')
     print(main.__doc__)
