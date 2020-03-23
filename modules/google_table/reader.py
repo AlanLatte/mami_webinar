@@ -42,9 +42,9 @@ def read_table(spreadsheetId=SPREAD_SHEET_ID):
                 if value['values'][row_id][i] == '':
                     break
                 info[-1][header] = value['values'][row_id][i]
-            else:
-                continue
-            break
+        else:
+            continue
+        break
 
     return info
 
