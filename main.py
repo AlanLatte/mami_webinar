@@ -12,18 +12,21 @@ from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
 from modules.manager import vebinar_manager
 
-from modules.work_with_google_table.reader import read_from_excel_table
-from modules.work_with_google_table.writer import create_new_sheet_in_table
+
+from modules.google_table.reader import read_cells
+from modules.google_table.writer import create_new_sheet
+
 
 def main(mode: str) -> None:
 
     """TODO:
-сделать функцию сортировки, которая будет позволять
-пропустить 0 в начале
-
-TODO:
-    статус коды в константах
-"""
+    1.  закинуть ключи к таблице в реп
+    2.  удалить ненужные функции
+    3.  называть переменные нормально. Отражать суть. (INFO -- не годится;) )
+    4.  подключать logging
+    5.  сделать функцию сортировки, которая будет позволять пропустить 0 в начале
+    6.  прописать __doc__ важным функциям
+    """
 
     id = 0
     info, id_to_book = read_all_info()
@@ -81,7 +84,7 @@ if __name__ == '__main__':
         row_info['event_session_id'] = 'test'
         row_info['link'] = 'test'
 
-    print(read_from_excel_table())
-    # create_new_sheet_in_table(info=info)
+    print(read_cells())
+    # create_new_sheet(info=info)
     # vebinar_manager(event_session_id = '3598709', param='stop')
     print(main.__doc__)
