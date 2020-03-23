@@ -62,7 +62,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
                     'properties': {
                             'sheetType': 'GRID',
                             'sheetId': get_free_sheet_id(spreadsheet),
-                            'title': check_name(sheet_name=sheet_name, spreadsheet=spreadsheet),
+                            'title': sheet_name#check_name(sheet_name=sheet_name, spreadsheet=spreadsheet),
                         }
                     }
                 }
@@ -71,7 +71,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
             "responseIncludeGridData": True
         }
     ).execute()
-    
+
     append_info = service.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheetID, body={
             "valueInputOption": "USER_ENTERED",
@@ -82,6 +82,8 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
 def prepair_data(info: list):
     for row in info:
         values = formating_data(info, {'type':'private'})
+        for value in values:
+            value.append('inactive')
         sheet_name = f"Расписание на {values[0][0]}"
 
     request = {
