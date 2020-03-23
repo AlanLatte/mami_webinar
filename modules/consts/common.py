@@ -12,6 +12,9 @@ INPUT_DIR_PATH = os.path.join(ABS_PATH, INPUT_FOLDER)
 OUTPUT_DIR_PATH = os.path.join(ABS_PATH, OUTPUT_FOLDER)
 
 
+SPREAD_SHEET_ID = "1e_DqDCwrc3xlTWsXDB-zUuchWSWH_HA6wzogKbXPStE"
+
+
 HEADERS = {
     'content-type': 'application/x-www-form-urlencoded',
     'x-auth-token': '62c679c0340cd0b1aca7b34099384f54',
@@ -23,6 +26,11 @@ WORKBOOK_HEADER_PRIVATE = (
     "Почта преподавателя", "Телефон преподавателя",
     "Название предмета", "Время с", "Время по", "Ссылка",
     "Вебинарная комната", "Группы", 'event_id', 'event_session_id'
+)
+
+WORKBOOK_HEADER_PUBLIC = (
+    "Дата", "ID", "Преподаватель ФИО",
+    "Название предмета", "Время с", "Время по", "Ссылка", "Группа"
 )
 
 
