@@ -6,8 +6,8 @@ from modules.consts.common import SPREAD_SHEET_ID
 from modules.consts.common import WORKBOOK_HEADER_PRIVATE
 from modules.writer import formating_data
 
+from modules.consts.common import SPREAD_SHEET_ID, CREDENTIALS_FILE
 
-CREDENTIALS_FILE = r'C:\Users\leo\Desktop\snappy-topic-271911-62bc34f9811c.json'  # имя файла с закрытым ключом
 
 httpAuth = ServiceAccountCredentials.from_json_keyfile_name(
     CREDENTIALS_FILE,

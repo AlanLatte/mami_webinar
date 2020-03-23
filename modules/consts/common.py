@@ -1,19 +1,24 @@
 import os
-from modules.utils.path_getter import get_abs_path
+from modules.utils.path_getter import get_abs_path, get_google_api_key_path
 
 
 INPUT_FOLDER = "input"
 OUTPUT_FOLDER = "output"
+
+API_FOLDER = 'api_keys'
 
 
 ABS_PATH = get_abs_path()
 
 INPUT_DIR_PATH = os.path.join(ABS_PATH, INPUT_FOLDER)
 OUTPUT_DIR_PATH = os.path.join(ABS_PATH, OUTPUT_FOLDER)
+API_DIR_PATH = os.path.join(ABS_PATH, API_FOLDER)
 
 
 SPREAD_SHEET_ID = "1e_DqDCwrc3xlTWsXDB-zUuchWSWH_HA6wzogKbXPStE"
-
+CREDENTIALS_FILE = get_google_api_key_path(
+                                    (os.path.join(API_DIR_PATH, 'google_api')
+                                          )
 
 HEADERS = {
     'content-type': 'application/x-www-form-urlencoded',

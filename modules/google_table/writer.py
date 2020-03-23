@@ -2,10 +2,8 @@ import httplib2
 import apiclient.discovery
 from oauth2client.service_account import ServiceAccountCredentials
 from modules.writer import formating_data
-from modules.consts.common import SPREAD_SHEET_ID
+from modules.consts.common import SPREAD_SHEET_ID, CREDENTIALS_FILE
 
-
-CREDENTIALS_FILE = r'C:\Users\leo\Desktop\snappy-topic-271911-62bc34f9811c.json'  # имя файла с закрытым ключом
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     CREDENTIALS_FILE,
