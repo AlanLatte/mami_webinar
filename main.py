@@ -13,7 +13,7 @@ from modules.utils.checker import check_required_folders
 from modules.manager import vebinar_manager
 
 
-from modules.google_table.reader import read_cells
+from modules.google_table.reader import read_table
 from modules.google_table.writer import create_new_sheet
 
 

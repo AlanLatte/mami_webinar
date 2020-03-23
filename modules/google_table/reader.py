@@ -21,7 +21,7 @@ service = apiclient.discovery.build('sheets', 'v4', http = httpAuth)
 # spreadsheet = service.spreadsheets().get(spreadsheetId = '1e_DqDCwrc3xlTWsXDB-zUuchWSWH_HA6wzogKbXPStE').execute()
 
 
-def read_cells(spreadsheetId=SPREAD_SHEET_ID):
+def read_table(spreadsheetId=SPREAD_SHEET_ID):
     spreadsheet = service.spreadsheets().get(spreadsheetId = spreadsheetId).execute()
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     # table = f'Расписание на {today}' + '4'
