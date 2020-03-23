@@ -2,7 +2,7 @@ import requests
 import datetime
 import sys
 import time
-from tuping import List
+from typing import List
 from modules.consts.common import HEADERS as headers
 from modules.time_manager import converter_time
 from modules.time_manager import converter_to_datetime
