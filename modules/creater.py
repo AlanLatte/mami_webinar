@@ -1,4 +1,4 @@
-from .consts.common import HEADERS as headers
+from .consts.common import HEADERS
 import requests
 
 def create_event(params):
@@ -16,7 +16,7 @@ def create_event(params):
         'type': 'webinar',
         'duration': 'PT1H30M0S',
     }
-    answer = requests.post(url, data=body, headers=headers)
+    
     try:
         print(
             f"""
@@ -28,7 +28,7 @@ def create_event(params):
     +=============================+
             """
         )
-        return answer.json()['eventId']
+        return requests.post(url, data=body, headers=HEADERS).json()['eventId']
 
     except KeyError:
         print('\tВебинар не создался')
@@ -49,7 +49,7 @@ def create_event_session(params, event_id):
         'startsAt[time][minute]': str(int(params['start_t'][1])),
     }
 
-    answer = requests.post(url, data=body, headers=headers).json()
+    answer = requests.post(url, data=body, headers=HEADERS).json()
     try:
         print(f"""
     Создана сессия
