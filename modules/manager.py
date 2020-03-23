@@ -38,12 +38,12 @@ def manager_controller():
         for row in table_data:
             if (
                 converter_to_datetime(
-                    row['Время по']
+                    f"{row['Дата']} {row['Время по']}"
                 ) + datetime.timedelta(hours=1)
             ) < current_time:
                 continue
             elif converter_to_datetime(
-                row['Время по']
+                f"{row['Дата']} {row['Время по']}"
             ) <= (
                 current_time - datetime.timedelta(minute=2)
             ) and row['status'] == 'active':
@@ -51,14 +51,14 @@ def manager_controller():
                 update_status(row=row['row'], status='finish')
             elif (
                 converter_to_datetime(
-                    row['Время с']
+                    f"{row['Дата']} {row['Время с']}"
                 ) - datetime.timedelta(minute=7)
             ) <= current_time and row['status'] == 'inactive':
                 vebinar_manager(event_session_id=row['event_session_id'], param='start')
                 update_status(row=row['row'], status='active')
             elif (
                 converter_to_datetime(
-                    row['Время с']
+                    f"{row['Дата']} {row['Время с']}"
                 ) - datetime.timedelta(hours=1)
             ) > current_time:
                 break
