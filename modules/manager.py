@@ -7,12 +7,11 @@ from modules.consts.common import HEADERS
 from modules.time_manager import converter_time
 from modules.time_manager import converter_to_datetime
 from datetime import timedelta
+from modules.google_table.reader import read_table
+from modules.google_table.updater import update_status
 
 
-def manager_controller(
-    date_time: List[List],
-    table_data: dict,
-    param: str):
+def manager_controller():
     """
     manager_controller() accepts 3 main parameters:
         1.  date_time: list[list]
@@ -26,39 +25,40 @@ def manager_controller(
 
         2.  table_data: dict
                 the following parameters should be in the dictionary:
-                    2.1. 'end_time'
+                    2.1. 'Время по'
                     2.2. 'status'
-                    2.3. 'start_time'
+                    2.3. 'Время с'
                     2.4  'event_session_id'
 
-        3.  param: str
-                param can be 'start' or 'stop'
     """
 
 
-    def control(current_time: datetime.datetime, table_data: dict={}):
+    def control(current_time: datetime.datetime):
+        table_data = read_table()
         for row in table_data:
             if (
                 converter_to_datetime(
-                    row['end_time']
+                    row['Время по']
                 ) + datetime.timedelta(hours=1)
             ) < current_time:
                 continue
             elif converter_to_datetime(
-                row['end_time']
+                row['Время по']
             ) <= (
                 current_time - datetime.timedelta(minute=2)
             ) and row['status'] == 'active':
                 vebinar_manager(event_session_id=row['event_session_id'] , param='stop')
+                update_status(row=row['row'], status='finish')
             elif (
                 converter_to_datetime(
-                    row['start_time']
+                    row['Время с']
                 ) - datetime.timedelta(minute=7)
             ) <= current_time and row['status'] == 'inactive':
                 vebinar_manager(event_session_id=row['event_session_id'], param='start')
+                update_status(row=row['row'], status='active')
             elif (
                 converter_to_datetime(
-                    row['start_time']
+                    row['Время с']
                 ) - datetime.timedelta(hours=1)
             ) > current_time:
                 break
