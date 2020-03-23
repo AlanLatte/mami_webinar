@@ -21,11 +21,11 @@ spreadsheet = service.spreadsheets().get(
 ).execute()
 
 
-def create_virtual_table(service):
+def create_virtual_table(title='Сие есть название документа2'):
     spreadsheet = service.spreadsheets().create(
         body = {
             'properties': {
-                'title': 'Сие есть название документа1', 'locale': 'ru_RU'
+                'title': title, 'locale': 'ru_RU'
                 },
         # 'sheets': [{'properties': {'sheetType': 'GRID',
         #                            'sheetId': 0,
@@ -46,12 +46,12 @@ def create_virtual_table(service):
         fields='id'
     ).execute()
     print(f"{str(spreadsheet['spreadsheetUrl'])}")
-    return spreadsheet['spreadsheetId']
+    print(spreadsheet['spreadsheetId'])
 
 
 def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
     request_body, sheet_name = prepair_data(info)
-    spreadsheet = service.spreadsheets().get(spreadsheetId=preadsheetID).execute()
+    spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheetID).execute()
     append_list = service.spreadsheets().batchUpdate(
         spreadsheetId=spreadsheet['spreadsheetId'],
         body={
