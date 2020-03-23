@@ -1,5 +1,5 @@
 import requests
-from .consts.common import HEADERS as headers
+from .consts.common import HEADERS
 
 
 def register_to_vebinar(eventsessionID, params, mode):
@@ -23,12 +23,12 @@ def register_to_vebinar(eventsessionID, params, mode):
                 'email': str(emails[id]),
             }
             if mode == 'online':
-                print(requests.post(url, data=body, headers=headers).json())
+                print(requests.post(url, data=body, headers=HEADERS).json())
             else:
-                print(f"   Регистрация успешна {str(names[id])} \
+                print(f"\tРегистрация успешна {str(names[id])} \
 email: {str(emails[id])}")
         except:
-            print(f"   Произошла ошибка регистрации пользователя")
+            print(f"\tПроизошла ошибка регистрации пользователя")
 
 
 def name_refactor(name):

@@ -3,7 +3,7 @@ import datetime
 import sys
 import time
 from typing import List
-from modules.consts.common import HEADERS as headers
+from modules.consts.common import HEADERS
 from modules.time_manager import converter_time
 from modules.time_manager import converter_to_datetime
 from datetime import timedelta
@@ -98,7 +98,7 @@ def vebinar_manager(event_session_id: str, param: str) -> None:
         sys.exit()
     try:
         url = f' https://userapi.webinar.ru/v3/eventsessions/{str(event_session_id)}/{str(param)}'
-        answer = requests.put(url, headers=headers)
+        answer = requests.put(url, headers=HEADERS)
         if answer.status_code == 204:
             if param == "start":
                 print(f"Webinar {event_session_id} was started")

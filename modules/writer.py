@@ -4,7 +4,8 @@ from openpyxl import load_workbook
 from openpyxl import Workbook
 from .consts.common import OUTPUT_DIR_PATH
 
-from modules.consts.common import WORKBOOK_HEADER_PRIVATE as header_privaye
+from modules.consts.common import WORKBOOK_HEADER_PRIVATE
+from modules.consts.common import WORKBOOK_HEADER_PUBLIC
 
 
 def write_data(sheet, wb, event_session_id, link, room, row, path):
@@ -16,13 +17,10 @@ def write_data(sheet, wb, event_session_id, link, room, row, path):
 
 def create_workbook(data: list, name: str, params: dict):
     if params['type'] == "private":
-        HEADER = header_privaye
+        HEADER = WORKBOOK_HEADER_PRIVATE
 
     elif params['type'] == "public":
-        HEADER = (
-            "Дата", "ID", "Преподаватель ФИО",
-            "Название предмета", "Время с", "Время по", "Ссылка", "Группа"
-        )
+        HEADER = WORKBOOK_HEADER_PUBLIC
     else:
         print("create_workbook need some params!")
         sys.exit()
