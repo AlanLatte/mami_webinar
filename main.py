@@ -34,7 +34,7 @@ def main(mode: str) -> None:
     info, id_to_book = read_all_info()
     info = sorted(info, key=lambda info: info[1], reverse = False)
     info = [i[0] for i in info]
-    print(info)
+    # print(info)
     for row_info in info:
         row_info['user_id'] = ROOMS[id][0]
         row_info['room'] = ROOMS[id][1]
@@ -54,6 +54,7 @@ def main(mode: str) -> None:
         if id == len(ROOMS):
             id = 0
 
+    create_new_sheet(info=info)
     create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'private'})
     result_books_names = []
     for file_name in id_to_book.values():
