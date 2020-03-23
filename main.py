@@ -14,8 +14,11 @@ from modules.manager import vebinar_manager
 
 
 from modules.google_table.reader import read_table
-from modules.google_table.writer import create_new_sheet
+from modules.google_table.writer import create_new_sheet, create_virtual_table
 
+from additional_utils.irrelevant_functions import json_with_users
+
+from modules.google_table.updater import update_status
 
 def main(mode: str) -> None:
 
