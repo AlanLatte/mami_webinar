@@ -1,6 +1,6 @@
 import os
 from modules.utils.path_getter import get_abs_path
-from modules.consts.common import INPUT_FOLDER,
+from modules.consts.common import INPUT_FOLDER
 from modules.consts.common import OUTPUT_FOLDER
 from modules.consts.common import ABS_PATH
 

@@ -22,8 +22,8 @@ def get_google_api_key_path(google_api_dir_path):
 
         Only 1 json file should be in the directory
     """
-    files = os.listdir(INPUT_DIR_PATH)
-    api_keys = filter(lambda x: x.endswith('.json'), files)
+    files = os.listdir(google_api_dir_path)
+    api_keys = [i for i in filter(lambda x: x.endswith('.json'), files)]
     if len(api_keys) > 1:
         print(__doc__).sys.exit()
     api_key_file_path = os.path.join(google_api_dir_path, api_keys[0])
