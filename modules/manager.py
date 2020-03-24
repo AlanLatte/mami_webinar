@@ -36,26 +36,26 @@ def manager_controller():
     def control(current_time: datetime.datetime):
         table_data = read_table()
         for row in table_data:
-            if (
-                converter_to_datetime(
-                    f"{row['Дата']} {row['Время по']}"
-                ) + datetime.timedelta(hours=1)
-            ) < current_time:
-                continue
-            elif converter_to_datetime(
+            # if (
+            #     converter_to_datetime(
+            #         f"{row['Дата']} {row['Время по']}"
+            #     ) + datetime.timedelta(hours=1)
+            # ) < current_time:
+            #     continue
+            if converter_to_datetime(
                 f"{row['Дата']} {row['Время по']}"
             ) <= (
-                current_time - datetime.timedelta(minute=2)
+                current_time - datetime.timedelta(minutes=2)
             ) and row['status'] == 'active':
-                vebinar_manager(event_session_id=row['event_session_id'] , param='stop')
-                update_status(row=row['row'], status='finish')
+                vebinar_manager(event_session_id=row['event_session_id'] , param='stop',\
+                row_in_google_table=row['row'])
             elif (
                 converter_to_datetime(
                     f"{row['Дата']} {row['Время с']}"
-                ) - datetime.timedelta(minute=7)
+                ) - datetime.timedelta(minutes=7)
             ) <= current_time and row['status'] == 'inactive':
-                vebinar_manager(event_session_id=row['event_session_id'], param='start')
-                update_status(row=row['row'], status='active')
+                vebinar_manager(event_session_id=row['event_session_id'], param='start',\
+                row_in_google_table=row['row'])
             elif (
                 converter_to_datetime(
                     f"{row['Дата']} {row['Время с']}"
@@ -66,25 +66,30 @@ def manager_controller():
 
     def get_start_time(current_time: datetime.datetime):
         if (current_time.minute % 2) != 0:
-            current_time -= datetime.timedelta(minute=1)
+            current_time -= datetime.timedelta(minutes=1)
         return current_time
 
 
-    if date_time.__len__() != 2:
-        print(manager_controller.__doc__)
-        sys.exit()
+    # if date_time.__len__() != 2:
+    #     print(manager_controller.__doc__)
+    #     sys.exit()
 
-    current_time = datetime.datetime.now()
-
+    current_time = get_start_time(datetime.datetime.now())
+    print('start control')
+    control(datetime.datetime.now())
+    print('while start')
+    print(f'start_sleep ({str(datetime.datetime.now())})')
     while True:
-        if (current_time - datetime.timedelta(minute=2)) < get_start_time(current_time):
+        if (datetime.datetime.now() - datetime.timedelta(minutes=2)) < current_time:
             time.sleep(10)
         else:
-            current_time += datetime.timedelta(minute=2)
-            control()
+            print('start control')
+            current_time += datetime.timedelta(minutes=2)
+            control(datetime.datetime.now())
+            print(f'start_sleep ({str(datetime.datetime.now())})')
 
 
-def vebinar_manager(event_session_id: str, param: str) -> None:
+def vebinar_manager(event_session_id: str, param: str, row_in_google_table: str) -> None:
     """
     vebinar_manager() accepts two main parameters:
         1.  event_session_id: str,
@@ -101,9 +106,20 @@ def vebinar_manager(event_session_id: str, param: str) -> None:
         answer = requests.put(url, headers=HEADERS)
         if answer.status_code == 204:
             if param == "start":
+                update_status(row=row_in_google_table, status='active')
                 print(f"Webinar {event_session_id} was started")
             if param == "stop":
+                update_status(row=row_in_google_table, status='finish')
                 print(f"Webinar {event_session_id} was stopped")
+        elif answer.status_code == 404:
+            if param == "start":
+                print(f"Webinar {event_session_id} responce [404]")
+            if param == "stop":
+                update_status(row=row_in_google_table, status='finish')
+                print(f"Webinar {event_session_id} was stopped by teacher")
+        elif answer.status_code == 500:
+            print(f"Server get 500")
+            print(f"Answer: {answer}")
         else:
             print(f"Bad event_session_id: {event_session_id}")
             print(f"Answer: {answer}")
