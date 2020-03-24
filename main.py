@@ -72,18 +72,23 @@ def main(mode: str) -> None:
 if __name__ == '__main__':
     # check_required_folders()
     # mode = input('Выбирите режим работы: \t')
-    # if mode == 'online' or mode == '1':
-    #     print('online mode on\n')
-    #     main('online')
-    # else:
-    #     print('offline mode on\n')
-    #     main('offline')
+    mode_m = input('Запустить менеджер или генерацию расписания')
+    if mode_m != '1':
+        mode = input('Выбирите режим работы: \t')
+        if mode == 'online' or mode == '1':
+            print('online mode on\n')
+            main('online')
+        else:
+            print('offline mode on\n')
+            main('offline')
+    else:
+        manager_controller()
 
     # create_virtual_table()
     # print(read_table())
     # vebinar_manager(event_session_id = '3598709', param='stop')
     # update_status(row=1,status='finish')
 
-    manager_controller()
+
 
     print(main.__doc__)
