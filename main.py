@@ -55,8 +55,8 @@ def main(mode: str) -> None:
         id+=1
         if id == len(ROOMS):
             id = 0
-
-    create_new_sheet(info=info)
+    if mode == 'online':
+        create_new_sheet(info=info)
     create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'private'})
     result_books_names = []
     for file_name in id_to_book.values():
@@ -70,20 +70,20 @@ def main(mode: str) -> None:
 
 
 if __name__ == '__main__':
-    # check_required_folders()
-    # mode = input('Выбирите режим работы: \t')
-    # if mode == 'online' or mode == '1':
-    #     print('online mode on\n')
-    #     main('online')
-    # else:
-    #     print('offline mode on\n')
-    #     main('offline')
+    check_required_folders()
+    mode = input('Выбирите режим работы: \t')
+    if mode == 'online' or mode == '1':
+        print('online mode on\n')
+        main('online')
+    else:
+        print('offline mode on\n')
+        main('offline')
 
     # create_virtual_table()
     # print(read_table())
     # vebinar_manager(event_session_id = '3598709', param='stop')
     # update_status(row=1,status='finish')
 
-    manager_controller()
+    # manager_controller()
 
     print(main.__doc__)
