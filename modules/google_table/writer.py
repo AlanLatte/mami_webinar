@@ -2,28 +2,21 @@ import httplib2
 import apiclient.discovery
 from oauth2client.service_account import ServiceAccountCredentials
 from modules.writer import formating_data
-from modules.consts.common import SPREAD_SHEET_ID, CREDENTIALS_FILE
 from modules.google_table.checker import check_name
+from modules.consts.common import SPREAD_SHEET_ID
+from modules.consts.common import CREDENTIALS_FILE,
+from modules.consts.common import HTTP_AUTH
+from modules.consts.common import SERVICE
 
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    CREDENTIALS_FILE,
-    [
-        'https://www.googleapis.com/auth/spreadsheets',
-        'https://www.googleapis.com/auth/drive'
-    ]
-)
 
-httpAuth = credentials.authorize(httplib2.Http())
-service = apiclient.discovery.build('sheets', 'v4', http = httpAuth)
-
-spreadsheet = service.spreadsheets().get(
+spreadsheet = SERVICE.spreadsheets().get(
     spreadsheetId = SPREAD_SHEET_ID
 ).execute()
 
 
 def create_virtual_table(title='Сие есть название документа2'):
-    spreadsheet = service.spreadsheets().create(
+    spreadsheet = SERVICE.spreadsheets().create(
         body = {
             'properties': {
                 'title': title, 'locale': 'ru_RU'
@@ -37,7 +30,7 @@ def create_virtual_table(title='Сие есть название докумен�
 
     print(spreadsheet)
 
-    driveService = apiclient.discovery.build('drive', 'v3', http = httpAuth)
+    driveService = apiclient.discovery.build('drive', 'v3', http = HTTP_AUTH)
     shareRes = driveService.permissions().create(
         fileId=spreadsheet['spreadsheetId'],
         body={
@@ -52,9 +45,9 @@ def create_virtual_table(title='Сие есть название докумен�
 
 def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
     request_body, sheet_name = prepair_data(info)
-    spreadsheet = service.spreadsheets().get(spreadsheetId=spreadsheetID).execute()
+    spreadsheet = SERVICE.spreadsheets().get(spreadsheetId=spreadsheetID).execute()
 
-    append_list = service.spreadsheets().batchUpdate(
+    append_list = SERVICE.spreadsheets().batchUpdate(
         spreadsheetId=spreadsheet['spreadsheetId'],
         body={
             "requests": [{
@@ -62,7 +55,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
                     'properties': {
                             'sheetType': 'GRID',
                             'sheetId': get_free_sheet_id(spreadsheet),
-                            'title': sheet_name#check_name(sheet_name=sheet_name, spreadsheet=spreadsheet),
+                            'title': check_name(sheet_name=sheet_name, spreadsheet=spreadsheet)# sheet_name,
                         }
                     }
                 }
@@ -72,7 +65,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
         }
     ).execute()
 
-    append_info = service.spreadsheets().values().batchUpdate(
+    append_info = SERVICE.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheetID, body={
             "valueInputOption": "USER_ENTERED",
             "data": request_body
@@ -99,7 +92,7 @@ def get_free_sheet_id(spreadsheet):
     ]
     return(max(mass)+1)
 
-# results = service.spreadsheets().values().batchUpdate(spreadsheetId = spreadsheet['spreadsheetId'], body = {
+# results = SERVICE.spreadsheets().values().batchUpdate(spreadsheetId = spreadsheet['spreadsheetId'], body = {
 #     "valueInputOption": "USER_ENTERED",
 #     "data": [
 #         {"range": "Сие есть название листа!B2:C3",
@@ -113,6 +106,6 @@ def get_free_sheet_id(spreadsheet):
 # }).execute()
 
 if __name__ == '__main__':
-    # id = create_virtual_table(service)
+    # id = create_virtual_table(SERVICE)
     print('id')
     # create_new_sheet(id)
