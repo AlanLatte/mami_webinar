@@ -1,26 +1,15 @@
-import requests
-import json
-from openpyxl import load_workbook
 from modules.consts.common import ROOMS
-from modules.consts.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
-from modules.time_manager import converter_date
-from modules.writer import write_data, create_workbook
+from modules.writer import create_workbook
 from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
 from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
 from modules.manager import vebinar_manager
-
-
-from modules.google_table.reader import read_table
-from modules.google_table.writer import create_new_sheet, create_virtual_table
-
-from additional_utils.irrelevant_functions import json_with_users
-
+from modules.google_table.writer import create_new_sheet
 from modules.google_table.updater import update_status
-
 from modules.manager import manager_controller
+from modules.settings import chat_options
 
 def main(mode: str) -> None:
 
@@ -50,7 +39,19 @@ def main(mode: str) -> None:
             row_info['event_session_id'] = 'test'
             row_info['link'] = 'test'
 
-        register_to_vebinar(eventsessionID=row_info['event_session_id'], params=row_info, mode=mode)
+        register_to_vebinar(
+            eventsessionID=row_info['event_session_id'],
+            params=row_info,
+            mode=mode
+        )
+
+        chat_options(
+            eventsessionID=row_info['event_session_id'],
+            params= {
+                "chat": "off",
+                "polls": "on"
+            }
+        )
 
         id+=1
         if id == len(ROOMS):
@@ -71,15 +72,31 @@ def main(mode: str) -> None:
 
 if __name__ == '__main__':
     check_required_folders()
-    mode = input('Выбирите режим работы: \t')
-    if mode == 'online' or mode == '1':
-        print('online mode on\n')
-        main('online')
-    else:
-        print('offline mode on\n')
-        main('offline')
+    # mode = input('Выбирите режим работы: \t')
+    # if mode == 'online' or mode == '1':
+    #     print('online mode on\n')
+    #     main('online')
+    # else:
+    #     print('offline mode on\n')
+    #     main('offline')
 
-    # create_virtual_table()
+    id = 0
+    info, id_to_book = read_all_info()
+    info = sorted(info, key=lambda info: info[1], reverse = False)
+    info = [i[0] for i in info]
+    # print(info)
+    for row_info in info:
+        row_info['user_id'] = ROOMS[id][0]
+        row_info['room'] = ROOMS[id][1]
+        row_info['event_id'] = 'test'
+        row_info['event_session_id'] = 'test'
+        row_info['link'] = 'test'
+        id+=1
+        if id == len(ROOMS):
+            id = 0
+    print(info)
+    create_new_sheet(info=info)
+
     # print(read_table())
     # vebinar_manager(event_session_id = '3598709', param='stop')
     # update_status(row=1,status='finish')
