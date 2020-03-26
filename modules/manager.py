@@ -34,34 +34,37 @@ def manager_controller():
 
 
     def control(current_time: datetime.datetime):
-        table_data = read_table()
-        for row in table_data:
-            # if (
-            #     converter_to_datetime(
-            #         f"{row['Дата']} {row['Время по']}"
-            #     ) + datetime.timedelta(hours=1)
-            # ) < current_time:
-            #     continue
-            if converter_to_datetime(
-                f"{row['Дата']} {row['Время по']}"
-            ) <= (
-                current_time - datetime.timedelta(minutes=2)
-            ) and row['status'] == 'active':
-                vebinar_manager(event_session_id=row['event_session_id'] , param='stop',\
-                row_in_google_table=row['row'])
-            elif (
-                converter_to_datetime(
-                    f"{row['Дата']} {row['Время с']}"
-                ) - datetime.timedelta(minutes=7)
-            ) <= current_time and row['status'] == 'inactive':
-                vebinar_manager(event_session_id=row['event_session_id'], param='start',\
-                row_in_google_table=row['row'])
-            elif (
-                converter_to_datetime(
-                    f"{row['Дата']} {row['Время с']}"
-                ) - datetime.timedelta(hours=1)
-            ) > current_time:
-                break
+        try:
+            table_data = read_table()
+            for row in table_data:
+                # if (
+                #     converter_to_datetime(
+                #         f"{row['Дата']} {row['Время по']}"
+                #     ) + datetime.timedelta(hours=1)
+                # ) < current_time:
+                #     continue
+                if converter_to_datetime(
+                    f"{row['Дата']} {row['Время по']}"
+                ) <= (
+                    current_time - datetime.timedelta(minutes=3)
+                ) and row['status'] == 'active':
+                    vebinar_manager(event_session_id=row['event_session_id'] , param='stop',\
+                    row_in_google_table=row['row'])
+                elif (
+                    converter_to_datetime(
+                        f"{row['Дата']} {row['Время с']}"
+                    ) - datetime.timedelta(minutes=7)
+                ) <= current_time and row['status'] == 'inactive':
+                    vebinar_manager(event_session_id=row['event_session_id'], param='start',\
+                    row_in_google_table=row['row'])
+                elif (
+                    converter_to_datetime(
+                        f"{row['Дата']} {row['Время с']}"
+                    ) - datetime.timedelta(hours=1)
+                ) > current_time:
+                    break
+        except:
+            control()
 
 
     def get_start_time(current_time: datetime.datetime):
@@ -80,7 +83,7 @@ def manager_controller():
     print('while start')
     print(f'start_sleep ({str(datetime.datetime.now())})')
     while True:
-        if (datetime.datetime.now() - datetime.timedelta(minutes=2)) < current_time:
+        if (datetime.datetime.now() - datetime.timedelta(minutes=1)) < current_time:
             time.sleep(10)
         else:
             print('start control')
