@@ -116,7 +116,8 @@ def vebinar_manager(event_session_id: str, param: str, row_in_google_table: str)
                 print(f"Webinar {event_session_id} was stopped")
         elif answer.status_code == 404:
             if param == "start":
-                print(f"Webinar {event_session_id} responce [404]")
+                update_status(row=row_in_google_table, status='active')
+                print(f"Webinar {event_session_id} was started by teacher")
             if param == "stop":
                 update_status(row=row_in_google_table, status='finish')
                 print(f"Webinar {event_session_id} was stopped by teacher")
