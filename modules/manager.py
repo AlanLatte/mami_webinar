@@ -64,6 +64,7 @@ def manager_controller():
                 ) > current_time:
                     break
         except:
+            time.sleep(10)
             control()
 
 
