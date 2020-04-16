@@ -32,8 +32,7 @@ def manager_controller():
 
     """
 
-
-    def control(current_time: datetime.datetime):
+    def control(current_time: datetime.datetime = datetime.datetime.now()):
         try:
             table_data = read_table()
             for row in table_data:
@@ -44,35 +43,33 @@ def manager_controller():
                 # ) < current_time:
                 #     continue
                 if converter_to_datetime(
-                    f"{row['Дата']} {row['Время по']}"
+                        f"{row['Дата']} {row['Время по']}"
                 ) <= (
-                    current_time - datetime.timedelta(minutes=3)
+                        current_time - datetime.timedelta(minutes=3)
                 ) and row['status'] == 'active':
-                    vebinar_manager(event_session_id=row['event_session_id'] , param='stop',\
-                    row_in_google_table=row['row'])
+                    vebinar_manager(event_session_id=row['event_session_id'], param='stop',
+                                    row_in_google_table=row['row'])
                 elif (
-                    converter_to_datetime(
-                        f"{row['Дата']} {row['Время с']}"
-                    ) - datetime.timedelta(minutes=7)
+                        converter_to_datetime(
+                            f"{row['Дата']} {row['Время с']}"
+                        ) - datetime.timedelta(minutes=7)
                 ) <= current_time and row['status'] == 'inactive':
-                    vebinar_manager(event_session_id=row['event_session_id'], param='start',\
-                    row_in_google_table=row['row'])
+                    vebinar_manager(event_session_id=row['event_session_id'], param='start', \
+                                    row_in_google_table=row['row'])
                 elif (
-                    converter_to_datetime(
-                        f"{row['Дата']} {row['Время с']}"
-                    ) - datetime.timedelta(hours=1)
+                        converter_to_datetime(
+                            f"{row['Дата']} {row['Время с']}"
+                        ) - datetime.timedelta(hours=1)
                 ) > current_time:
                     break
         except:
             time.sleep(10)
             control()
 
-
     def get_start_time(current_time: datetime.datetime):
         if (current_time.minute % 2) != 0:
             current_time -= datetime.timedelta(minutes=1)
         return current_time
-
 
     # if date_time.__len__() != 2:
     #     print(manager_controller.__doc__)
