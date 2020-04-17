@@ -10,7 +10,8 @@ def writer(data: Iterable[Dict[str, str]]):
         os.path.join(OUTPUT_DIR_PATH, "collect_webinar_to_csv.csv"), mode="w"
     ) as csvfile:
         dict_writer = csv.DictWriter(
-            csvfile, fieldnames=["startAt", "endAt", "user", "eventSessions", "eventId"]
+            csvfile, fieldnames=["startAt", "endAt", "subject", "eventSessions",
+                                 "eventId"]
         )
         dict_writer.writeheader()
         for object_ in data:
