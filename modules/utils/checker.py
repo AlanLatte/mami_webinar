@@ -6,11 +6,7 @@ from modules.consts.common import ABS_PATH
 
 
 def make_folder(folder_name):
-    os.mkdir(
-        os.path.join(
-            ABS_PATH, folder_name
-        )
-    )
+    os.mkdir(os.path.join(ABS_PATH, folder_name))
 
 
 def check_required_folders():

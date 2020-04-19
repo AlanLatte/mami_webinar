@@ -5,15 +5,12 @@ def get_abs_path() -> str:
     os.chdir(
         os.path.abspath(
             os.path.join(
-                os.path.join(
-                    os.path.join(__file__, os.pardir),
-                    os.pardir
-                ),
-                os.pardir
+                os.path.join(os.path.join(__file__, os.pardir), os.pardir), os.pardir
             )
         )
     )
     return os.getcwd()
+
 
 def get_google_api_key_path(google_api_dir_path):
     """
@@ -23,7 +20,7 @@ def get_google_api_key_path(google_api_dir_path):
         Only 1 json file should be in the directory
     """
     files = os.listdir(google_api_dir_path)
-    api_keys = [i for i in filter(lambda x: x.endswith('.json'), files)]
+    api_keys = [i for i in filter(lambda x: x.endswith(".json"), files)]
     if len(api_keys) > 1:
         print(__doc__).sys.exit()
     api_key_file_path = os.path.join(google_api_dir_path, api_keys[0])

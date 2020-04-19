@@ -22,6 +22,10 @@ def read_row_from_exel(sheet, row):
     return output_data
 
 
+def read_email_from_parametrs(wb):
+    return str(wb['Параметры'].cell(row=6, column=2).value)
+
+
 def full_read_exel_file(file, id_to_books):
     book_data = []
     row = 2
@@ -35,18 +39,22 @@ def full_read_exel_file(file, id_to_books):
         row += 1
         if sheet.cell(row=row, column=1).value is None:
             break
-    return book_data, id_to_books
+    email = read_email_from_parametrs(wb=wb)
+    return book_data, id_to_books, email
 
 
 def read_all_info():
     all_data = []
     id_to_books = {}
+    file_to_email = {}
     files = [prepair_file_name(file) for file in os.listdir(INPUT_DIR_PATH)]
     exel_files = filter(lambda x: x.endswith('.xlsx'), files)
     for file in exel_files:
-        data_from_book, id_to_books = full_read_exel_file(file, id_to_books)
+        data_from_book, id_to_books, email = full_read_exel_file(file, id_to_books)
         all_data = [*all_data, *data_from_book]
-    return all_data, id_to_books
+        file_to_email[file] = email
+    return all_data, id_to_books, file_to_email
+
 
 def prepair_file_name(file_name):
     name = '.'.join(['.'.join(file_name.split('.')[:-1]), file_name.split('.')[-1].lower()])

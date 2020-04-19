@@ -18,11 +18,12 @@ def read():
     all_data = []
     id_to_books = {}
     files = os.listdir(INPUT_DIR_PATH)
-    exel_files = filter(lambda x: x.endswith('.xlsx'), files)
+    exel_files = filter(lambda x: x.endswith(".xlsx"), files)
     for file in exel_files:
         data_from_book = no_full_read_exel_file(file)
         all_data = [*all_data, *data_from_book]
     return all_data
+
 
 def no_full_read_exel_file(file):
     book_data = []
@@ -30,7 +31,7 @@ def no_full_read_exel_file(file):
     path = os.path.join(INPUT_DIR_PATH, file)
     while True:
         wb = load_workbook(path, data_only=True)
-        sheet = wb['Sheet']
+        sheet = wb["Sheet"]
         event_id = sheet.cell(row=row, column=12).value
         book_data.append(event_id)
         row += 1
@@ -38,18 +39,18 @@ def no_full_read_exel_file(file):
             break
     return book_data
 
+
 def get_another_v(event_id, user_id):
-    url = f'https://userapi.webinar.ru/v3/organization/events/{event_id}/move'
-    body =  {
-            'userId': user_id
-            }
+    url = f"https://userapi.webinar.ru/v3/organization/events/{event_id}/move"
+    body = {"userId": user_id}
     requests.put(url, data=body, headers=HEADERS)
-    print('ok')
+    print("ok")
+
 
 book_data = read()
 
-OUTPUT_FILE_PATH = os.path.join(OUTPUT_DIR_PATH, 'svodniy_table.xlsx')
-if 'svodniy_table.xlsx' not in os.listdir(OUTPUT_DIR_PATH):
+OUTPUT_FILE_PATH = os.path.join(OUTPUT_DIR_PATH, "svodniy_table.xlsx")
+if "svodniy_table.xlsx" not in os.listdir(OUTPUT_DIR_PATH):
     work_book = Workbook()
     work_book.save(filename=str(OUTPUT_FILE_PATH))
 
@@ -59,9 +60,7 @@ sheet = work_book[sheet_names[0]]
 id = 0
 
 for row, event_id in enumerate(book_data):
-    sheet.cell(
-        row=int(row)+2, column=int(10)
-    ).value = 'w{}'.format(ROOMS[id][1])
+    sheet.cell(row=int(row) + 2, column=int(10)).value = "w{}".format(ROOMS[id][1])
     # print(f'https://userapi.webinar.ru/v3/organization/events/{event_id}/move')
     # get_another_v(event_id, ROOMS[id][0])
     id += 1
@@ -70,10 +69,9 @@ for row, event_id in enumerate(book_data):
 
 work_book.save(filename=str(OUTPUT_FILE_PATH))
 
+
 def get_another_v(event_id, user_id):
-    url = f'https://userapi.webinar.ru/v3/organization/events/{event_id}/move'
-    body =  {
-            userId: user_id
-            }
+    url = f"https://userapi.webinar.ru/v3/organization/events/{event_id}/move"
+    body = {userId: user_id}
     responce = requests.put(url, data=body, headers=HEADERS).json()
     print(responce)
