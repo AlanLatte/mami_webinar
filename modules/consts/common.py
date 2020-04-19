@@ -1,4 +1,9 @@
 import os
+
+import httplib2
+import apiclient.discovery
+from oauth2client.service_account import ServiceAccountCredentials
+
 from modules.utils.path_getter import get_abs_path, get_google_api_key_path
 
 

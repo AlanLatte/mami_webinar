@@ -4,7 +4,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from modules.writer import formating_data
 from modules.google_table.checker import check_name
 from modules.consts.common import SPREAD_SHEET_ID
-from modules.consts.common import CREDENTIALS_FILE,
+from modules.consts.common import CREDENTIALS_FILE
 from modules.consts.common import HTTP_AUTH
 from modules.consts.common import SERVICE
 
