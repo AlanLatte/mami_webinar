@@ -12,7 +12,6 @@ from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
 from modules.manager import vebinar_manager
 
-
 from modules.google_table.reader import read_table
 from modules.google_table.writer import create_new_sheet, create_virtual_table
 
@@ -20,8 +19,8 @@ from additional_utils.irrelevant_functions import json_with_users
 
 from modules.google_table.updater import update_status
 
-def main(mode: str) -> None:
 
+def main(mode: str) -> None:
     """TODO:
     1.  удалить ненужные функции
     2.  называть переменные нормально. Отражать суть. (INFO -- не годится;) )
@@ -30,14 +29,14 @@ def main(mode: str) -> None:
     5.  прописать __doc__ важным функциям
     """
 
-    id = 0
+    room_id = 0
     info, id_to_book = read_all_info()
-    info = sorted(info, key=lambda info: info[1], reverse = False)
+    info = sorted(info, key=lambda info: info[1], reverse=False)
     info = [i[0] for i in info]
     # print(info)
     for row_info in info:
-        row_info['user_id'] = ROOMS[id][0]
-        row_info['room'] = ROOMS[id][1]
+        row_info['user_id'] = ROOMS[room_id][0]
+        row_info['room'] = ROOMS[room_id][1]
 
         if mode == 'online':
             row_info['event_id'] = create_event(row_info)
@@ -50,12 +49,11 @@ def main(mode: str) -> None:
 
         register_to_vebinar(eventsessionID=row_info['event_session_id'], params=row_info, mode=mode)
 
-        id+=1
-        if id == len(ROOMS):
-            id = 0
+        room_id += 1
+        if room_id == len(ROOMS):
+            room_id = 0
 
-    create_new_sheet(info=info)
-    create_workbook(data=info, name='svodniy_table.xlsx', params={'type':'private'})
+    create_workbook(data=info, name='svodniy_table.xlsx', params={'type': 'private'})
     result_books_names = []
     for file_name in id_to_book.values():
         if file_name not in result_books_names:
@@ -64,7 +62,10 @@ def main(mode: str) -> None:
             for row in info:
                 if id_to_book[row['id']] == file_name:
                     temp_list.append(row)
-            create_workbook(data=temp_list, name=f'результат_{file_name}', params={'type':'public'})
+            create_workbook(data=temp_list, name=f'результат_{file_name}', params={'type': 'public'})
+
+    if mode == 'online':
+        create_new_sheet(info=info)
 
 
 if __name__ == '__main__':

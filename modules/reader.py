@@ -28,7 +28,7 @@ def full_read_exel_file(file, id_to_books):
     path = os.path.join(INPUT_DIR_PATH, file)
     while True:
         wb = load_workbook(path, data_only=True)
-        sheet = wb['Worksheet']
+        sheet = wb['Вебинары']
         data_from_row = read_row_from_exel(sheet, row)
         book_data.append(data_from_row)
         id_to_books[data_from_row[0]['id']] = file
