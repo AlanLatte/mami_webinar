@@ -7,6 +7,8 @@ from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
 from modules.manager import vebinar_manager
 
+from modules.email.mail import send_all
+
 from modules.google_table.reader import read_table
 from modules.google_table.writer import create_new_sheet, create_virtual_table
 
@@ -64,13 +66,18 @@ def main(mode: str) -> None:
             for row in info:
                 if id_to_book[row["id"]] == file_name:
                     temp_list.append(row)
-            create_workbook(
-                data=temp_list, name=file_name, params={"type": "public"}
-            )
-
+            create_workbook(data=temp_list, name=file_name, params={"type": "public"})
 
     if mode == "online":
-        create_new_sheet(info=info)
+        print("создаётся google docs")
+        try:
+            create_new_sheet(info=info)
+        except:
+            print("уже существует google docs sheet на это число")
+        else:
+            print("создался google docs")
+        print("отправляются письма")
+        send_all(file_to_email)
 
 
 if __name__ == "__main__":

@@ -23,7 +23,7 @@ def read_row_from_exel(sheet, row):
 
 
 def read_email_from_parametrs(wb):
-    return str(wb['Параметры'].cell(row=6, column=2).value)
+    return str(wb["Параметры"].cell(row=6, column=2).value)
 
 
 def full_read_exel_file(file, id_to_books):
@@ -32,10 +32,10 @@ def full_read_exel_file(file, id_to_books):
     path = os.path.join(INPUT_DIR_PATH, file)
     while True:
         wb = load_workbook(path, data_only=True)
-        sheet = wb['Вебинары']
+        sheet = wb["Вебинары"]
         data_from_row = read_row_from_exel(sheet, row)
         book_data.append(data_from_row)
-        id_to_books[data_from_row[0]['id']] = file
+        id_to_books[data_from_row[0]["id"]] = file
         row += 1
         if sheet.cell(row=row, column=1).value is None:
             break
@@ -48,7 +48,7 @@ def read_all_info():
     id_to_books = {}
     file_to_email = {}
     files = [prepair_file_name(file) for file in os.listdir(INPUT_DIR_PATH)]
-    exel_files = filter(lambda x: x.endswith('.xlsx'), files)
+    exel_files = filter(lambda x: x.endswith(".xlsx"), files)
     for file in exel_files:
         data_from_book, id_to_books, email = full_read_exel_file(file, id_to_books)
         all_data = [*all_data, *data_from_book]
@@ -57,5 +57,7 @@ def read_all_info():
 
 
 def prepair_file_name(file_name):
-    name = '.'.join(['.'.join(file_name.split('.')[:-1]), file_name.split('.')[-1].lower()])
+    name = ".".join(
+        [".".join(file_name.split(".")[:-1]), file_name.split(".")[-1].lower()]
+    )
     return name
