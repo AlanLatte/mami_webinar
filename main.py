@@ -1,11 +1,6 @@
-import requests
-import json
-from openpyxl import load_workbook
 from modules.consts.common import ROOMS
-from modules.consts.common import HEADERS as headers
 from modules.registrator import register_to_vebinar
-from modules.time_manager import converter_date
-from modules.writer import write_data, create_workbook
+from modules.writer import create_workbook
 from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
 from modules.registrator import register_to_vebinar
@@ -18,6 +13,8 @@ from modules.google_table.writer import create_new_sheet, create_virtual_table
 from additional_utils.irrelevant_functions import json_with_users
 
 from modules.google_table.updater import update_status
+from modules.manager import manager_controller
+from modules.settings import chat_options
 
 
 def main(mode: str) -> None:
@@ -47,7 +44,12 @@ def main(mode: str) -> None:
             row_info['event_session_id'] = 'test'
             row_info['link'] = 'test'
 
-        register_to_vebinar(eventsessionID=row_info['event_session_id'], params=row_info, mode=mode)
+        if mode == 'online':
+            register_to_vebinar(
+                eventsessionID=row_info['event_session_id'],
+                params=row_info,
+                mode=mode
+            )
 
         room_id += 1
         if room_id == len(ROOMS):
@@ -77,8 +79,5 @@ if __name__ == '__main__':
     else:
         print('offline mode on\n')
         main('offline')
-    # create_virtual_table()
-    # print(read_table())
-    # vebinar_manager(event_session_id = '3598709', param='stop')
-    # update_status(row=1,status='finish')
+
     print(main.__doc__)

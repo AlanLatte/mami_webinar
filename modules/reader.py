@@ -41,9 +41,13 @@ def full_read_exel_file(file, id_to_books):
 def read_all_info():
     all_data = []
     id_to_books = {}
-    files = os.listdir(INPUT_DIR_PATH)
+    files = [prepair_file_name(file) for file in os.listdir(INPUT_DIR_PATH)]
     exel_files = filter(lambda x: x.endswith('.xlsx'), files)
     for file in exel_files:
         data_from_book, id_to_books = full_read_exel_file(file, id_to_books)
         all_data = [*all_data, *data_from_book]
     return all_data, id_to_books
+
+def prepair_file_name(file_name):
+    name = '.'.join(['.'.join(file_name.split('.')[:-1]), file_name.split('.')[-1].lower()])
+    return name
