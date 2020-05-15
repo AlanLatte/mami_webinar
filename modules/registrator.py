@@ -39,6 +39,9 @@ def name_refactor(name):
 
 
 def email_refactoring(email):
-    email = email.replace(" ", "")
-    email = email.split("|")
+    try:
+        email = email.replace(" ", "")
+        email = email.split("|")
+    except:
+        email = "4.leo.makarov@gmail.com"
     return email

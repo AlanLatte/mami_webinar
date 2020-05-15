@@ -60,9 +60,10 @@ def create_new_sheet(
                             "properties": {
                                 "sheetType": "GRID",
                                 "sheetId": get_free_sheet_id(spreadsheet),
-                                "title": check_name(
-                                    sheet_name=sheet_name, spreadsheet=spreadsheet
-                                ),  # sheet_name,
+                                "title": sheet_name,
+                                #check_name(
+                                    # sheet_name=sheet_name, spreadsheet=spreadsheet
+                                # ),
                             }
                         }
                     }

@@ -23,7 +23,10 @@ def read_row_from_exel(sheet, row):
 
 
 def read_email_from_parametrs(wb):
-    return str(wb["Параметры"].cell(row=6, column=2).value)
+    try:
+        return str(wb["Параметры"].cell(row=6, column=2).value)
+    except KeyError:
+        return 'zhuplev@gmail.com'
 
 
 def full_read_exel_file(file, id_to_books):

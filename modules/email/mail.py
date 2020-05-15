@@ -21,7 +21,7 @@ def send_all(file_to_email):
             files=[os.path.join(OUTPUT_DIR_PATH, file)],
         )
     send_email(
-        addr_to="a.s.zhuplev@mospolytech.ru",
+        addr_to="zhuplev@gmail.com",
         msg_subj="Расписание вебинаров",
         msg_text="",
         files=[os.path.join(OUTPUT_DIR_PATH)],
@@ -29,8 +29,8 @@ def send_all(file_to_email):
 
 
 def send_email(addr_to, msg_subj, msg_text, files):
-    addr_from = "4.leo.makarov@gmail.com"  # Отправитель
-    password = "venfzdniijabquja"  # Пароль
+    addr_from = "noreply.webinar.mospolytech@gmail.com"  # Отправитель
+    password = "qvbnwsllebvpwgtb"  # Пароль
 
     msg = MIMEMultipart()  # Создаем сообщение
     msg["From"] = addr_from  # Адресат
