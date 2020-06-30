@@ -1,20 +1,10 @@
 from modules.consts.common import ROOMS
-from modules.registrator import register_to_vebinar
-from modules.writer import create_workbook
-from modules.reader import read_all_info
 from modules.creater import create_event, create_event_session
+from modules.google_table.writer import create_new_sheet
+from modules.reader import read_all_info
 from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
-from modules.manager import vebinar_manager
-
-from modules.google_table.reader import read_table
-from modules.google_table.writer import create_new_sheet, create_virtual_table
-
-from additional_utils.irrelevant_functions import json_with_users
-
-from modules.google_table.updater import update_status
-from modules.manager import manager_controller
-from modules.settings import chat_options
+from modules.writer import create_workbook
 
 
 def main(mode: str) -> None:
