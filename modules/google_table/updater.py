@@ -1,6 +1,6 @@
 import datetime
 import httplib2
-import apiclient.discovery
+from googleapiclient import discovery
 from oauth2client.service_account import ServiceAccountCredentials
 from modules.consts.common import SPREAD_SHEET_ID
 from modules.consts.common import CREDENTIALS_FILE
@@ -17,7 +17,7 @@ HTTP_AUTH = ServiceAccountCredentials.from_json_keyfile_name(
     ]
 ).authorize(httplib2.Http())
 
-SERVICE = apiclient.discovery.build('sheets', 'v4', http = HTTP_AUTH)
+SERVICE = discovery.build('sheets', 'v4', http = HTTP_AUTH)
 
 def update_status(row, \
     sheet_name=f'Расписание на {datetime.datetime.now().strftime("%Y-%m-%d")}',\

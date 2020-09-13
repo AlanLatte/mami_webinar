@@ -1,6 +1,6 @@
 import datetime
 import httplib2
-import apiclient.discovery
+from googleapiclient import discovery
 from oauth2client.service_account import ServiceAccountCredentials
 from modules.consts.common import SPREAD_SHEET_ID, CREDENTIALS_FILE
 from modules.consts.common import WORKBOOK_HEADER_PRIVATE
@@ -16,7 +16,7 @@ HTTP_AUTH = ServiceAccountCredentials.from_json_keyfile_name(
     ]
 ).authorize(httplib2.Http())
 
-SERVICE = apiclient.discovery.build('sheets', 'v4', http=HTTP_AUTH)
+SERVICE = discovery.build('sheets', 'v4', http=HTTP_AUTH)
 
 
 def read_table(spreadsheetId=SPREAD_SHEET_ID, count_of_row_in_request=500):
@@ -40,6 +40,7 @@ def read_table(spreadsheetId=SPREAD_SHEET_ID, count_of_row_in_request=500):
                 break
             info.append({})
             for i, header in enumerate(WORKBOOK_HEADER_PRIVATE):
+                print(info)
                 info[-1][header] = value['values'][row_in_responce][i]
             info[-1]['row'] = row + row_in_responce
         else:

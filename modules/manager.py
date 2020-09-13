@@ -95,8 +95,10 @@ def manager_controller():
                     print(
                         f"\tDon't connect to google docs. {str(datetime.datetime.now())}"
                     )
+                    time.sleep(5)
                 else:
                     break
+            time.sleep(10)
             print(f"start_sleep ({str(datetime.datetime.now())})")
 
 
@@ -142,3 +144,7 @@ def vebinar_manager(
         print(f"vebinar_manager() error: {e}")
         print(f"event_session_id: {event_session_id}")
         print(f"Type of event_session_id: {type(event_session_id)}")
+
+
+if __name__ == '__main__':
+    manager_controller()

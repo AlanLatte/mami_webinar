@@ -1,7 +1,7 @@
 import os
 
 import httplib2
-import apiclient.discovery
+from googleapiclient import discovery
 from oauth2client.service_account import ServiceAccountCredentials
 
 from modules.utils.path_getter import get_abs_path, get_google_api_key_path
@@ -34,7 +34,7 @@ HTTP_AUTH = ServiceAccountCredentials.from_json_keyfile_name(
     ]
 ).authorize(httplib2.Http())
 
-SERVICE = apiclient.discovery.build('sheets', 'v4', http = HTTP_AUTH)
+SERVICE = discovery.build('sheets', 'v4', http = HTTP_AUTH)
 
 
 HEADERS = {

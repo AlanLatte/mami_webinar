@@ -1,5 +1,5 @@
 import httplib2
-import apiclient.discovery
+from googleapiclient import discovery
 from oauth2client.service_account import ServiceAccountCredentials
 from modules.writer import formating_data
 from modules.google_table.checker import check_name
@@ -30,7 +30,7 @@ def create_virtual_table(title='Сие есть название докумен�
 
     print(spreadsheet)
 
-    driveService = apiclient.discovery.build('drive', 'v3', http = HTTP_AUTH)
+    driveService = discovery.build('drive', 'v3', http = HTTP_AUTH)
     shareRes = driveService.permissions().create(
         fileId=spreadsheet['spreadsheetId'],
         body={
@@ -46,7 +46,6 @@ def create_virtual_table(title='Сие есть название докумен�
 def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
     request_body, sheet_name = prepair_data(info)
     spreadsheet = SERVICE.spreadsheets().get(spreadsheetId=spreadsheetID).execute()
-
     append_list = SERVICE.spreadsheets().batchUpdate(
         spreadsheetId=spreadsheet['spreadsheetId'],
         body={
@@ -64,7 +63,7 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
             "responseIncludeGridData": True
         }
     ).execute()
-
+    print(request_body)
     append_info = SERVICE.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheetID, body={
             "valueInputOption": "USER_ENTERED",

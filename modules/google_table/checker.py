@@ -4,7 +4,7 @@ import re
 def check_name(sheet_name, spreadsheet=None):
     sheets = spreadsheet.get('sheets', '')
     counter_sheets_regexp = re.compile(pattern=r"\((\d)+\)+$")
-    if sheet_name in sheets:
+    if sheet_name in [a['properties']['title'] for a in sheets]:
         counter_information = sum(
             [
                 [
@@ -30,3 +30,5 @@ def check_name(sheet_name, spreadsheet=None):
             )
         else:
             return f"{sheet_name}(1)"
+    else:
+        return sheet_name
