@@ -28,7 +28,6 @@ def create_virtual_table(title='Сие есть название докумен�
         }
     ).execute()
 
-    print(spreadsheet)
 
     driveService = discovery.build('drive', 'v3', http = HTTP_AUTH)
     shareRes = driveService.permissions().create(
@@ -39,8 +38,6 @@ def create_virtual_table(title='Сие есть название докумен�
         },  # доступ на чтение кому угодно
         fields='id'
     ).execute()
-    print(f"{str(spreadsheet['spreadsheetUrl'])}")
-    print(spreadsheet['spreadsheetId'])
 
 
 def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
@@ -63,7 +60,6 @@ def create_new_sheet(info: list, spreadsheetID: str=SPREAD_SHEET_ID,):
             "responseIncludeGridData": True
         }
     ).execute()
-    print(request_body)
     append_info = SERVICE.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheetID, body={
             "valueInputOption": "USER_ENTERED",

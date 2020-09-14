@@ -1,6 +1,7 @@
 from modules.consts.common import ROOMS
 from modules.creater import create_event, create_event_session
 from modules.google_table.writer import create_new_sheet
+from modules.manager import manager_controller
 from modules.reader import read_all_info
 from modules.registrator import register_to_vebinar
 from modules.utils.checker import check_required_folders
@@ -66,8 +67,9 @@ if __name__ == '__main__':
     if mode == 'online' or mode == '1':
         print('online mode on\n')
         main('online')
-    else:
+    elif mode == 'check' or mode == 'offline' or mode == '2':
         print('offline mode on\n')
         main('offline')
-
+    elif mode == 'manager' or mode == '3':
+        manager_controller()
     print(main.__doc__)
