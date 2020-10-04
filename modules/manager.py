@@ -1,14 +1,16 @@
-import requests
 import datetime
-import sys
+import logging
 import time
-from typing import List
+
+import requests
+
+import log
 from modules.consts.common import HEADERS
-from modules.time_manager import converter_time
-from modules.time_manager import converter_to_datetime
-from datetime import timedelta
 from modules.google_table.reader import read_table
 from modules.google_table.updater import update_status
+from modules.time_manager import converter_to_datetime
+
+logger = log.get_logger(name="webinar_manager")
 
 
 def manager_controller():
@@ -36,18 +38,12 @@ def manager_controller():
         try:
             table_data = read_table()
             for row in table_data:
-                # if (
-                #     converter_to_datetime(
-                #         f"{row['Дата']} {row['Время по']}"
-                #     ) + datetime.timedelta(hours=1)
-                # ) < current_time:
-                #     continue
                 if (
                     converter_to_datetime(f"{row['Дата']} {row['Время по']}")
                     <= (current_time - datetime.timedelta(minutes=3))
                     and row["status"] == "active"
                 ):
-                    vebinar_manager(
+                    webinar_manager(
                         event_session_id=row["event_session_id"],
                         param="stop",
                         row_in_google_table=row["row"],
@@ -56,7 +52,7 @@ def manager_controller():
                     converter_to_datetime(f"{row['Дата']} {row['Время с']}")
                     - datetime.timedelta(minutes=7)
                 ) <= current_time and row["status"] == "inactive":
-                    vebinar_manager(
+                    webinar_manager(
                         event_session_id=row["event_session_id"],
                         param="start",
                         row_in_google_table=row["row"],
@@ -74,35 +70,35 @@ def manager_controller():
             current_time -= datetime.timedelta(minutes=1)
         return current_time
 
-    # if date_time.__len__() != 2:
-    #     print(manager_controller.__doc__)
-    #     sys.exit()
-
     current_time = get_start_time(datetime.datetime.now())
-    print("start control")
+    logger.info("Init manager", start_time=datetime.datetime.now())
     control(datetime.datetime.now())
-    print("while start")
-    print(f"start_sleep ({str(datetime.datetime.now())})")
     while True:
         if (datetime.datetime.now() - datetime.timedelta(minutes=1)) < current_time:
             time.sleep(10)
         else:
-            print("start control")
             current_time += datetime.timedelta(minutes=2)
+            logger.info("Control loop started")
             while True:
-                responce = control(datetime.datetime.now())
-                if not responce:
-                    print(
-                        f"\tDon't connect to google docs. {str(datetime.datetime.now())}"
+                response = control(datetime.datetime.now())
+                if not response:
+                    logger.info(
+                        "Cant connect to google table.",
+                        reason="All webinars are closed or "
+                        "you have problem with ethernet",
+                        timestamp=datetime.datetime.now(),
                     )
                     time.sleep(5)
                 else:
                     break
+            logger.info(
+                "10 seconds delay started.",
+                timestamp=datetime.datetime.now(),
+            )
             time.sleep(10)
-            print(f"start_sleep ({str(datetime.datetime.now())})")
 
 
-def vebinar_manager(
+def webinar_manager(
     event_session_id: str, param: str, row_in_google_table: str
 ) -> None:
     """
@@ -115,7 +111,7 @@ def vebinar_manager(
     if param not in ["start", "stop"]:
         import sys
 
-        print(vebinar_manager.__doc__)
+        print(webinar_manager.__doc__)
         sys.exit()
     try:
         url = f" https://userapi.webinar.ru/v3/eventsessions/{str(event_session_id)}/{str(param)}"
@@ -123,28 +119,38 @@ def vebinar_manager(
         if answer.status_code == 204:
             if param == "start":
                 update_status(row=row_in_google_table, status="active")
-                print(f"Webinar {event_session_id} was started")
+                logger.info("Webinar was started", event_session_id=event_session_id)
             if param == "stop":
                 update_status(row=row_in_google_table, status="finish")
-                print(f"Webinar {event_session_id} was stopped")
+                logger.info("Webinar was stopped", event_session_id=event_session_id)
         elif answer.status_code == 404:
             if param == "start":
                 update_status(row=row_in_google_table, status="active")
-                print(f"Webinar {event_session_id} was started by teacher")
+                logger.info(
+                    "Webinar was started by teacher", event_session_id=event_session_id
+                )
             if param == "stop":
                 update_status(row=row_in_google_table, status="finish")
-                print(f"Webinar {event_session_id} was stopped by teacher")
+                logger.info(
+                    "Webinar was stopped by teacher", event_session_id=event_session_id
+                )
+            logger.info(
+                "Webinar was stopped by teacher", event_session_id=event_session_id
+            )
         elif answer.status_code == 500:
-            print(f"Server get 500")
-            print(f"Answer: {answer}")
+            logger.info("Server get 500", answer=answer)
         else:
-            print(f"Bad event_session_id: {event_session_id}")
-            print(f"Answer: {answer}")
+            logger.info(
+                "Bad event_session_id", event_session_id=event_session_id, answer=answer
+            )
     except Exception as e:
-        print(f"vebinar_manager() error: {e}")
-        print(f"event_session_id: {event_session_id}")
-        print(f"Type of event_session_id: {type(event_session_id)}")
+        logger.info(
+            "vebinar_manager() error",
+            error=e,
+            event_session_id=event_session_id,
+            type_even_session_id=type(event_session_id),
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     manager_controller()

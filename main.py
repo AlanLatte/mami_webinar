@@ -1,3 +1,5 @@
+import time
+
 from modules.consts.common import ROOMS
 from modules.creater import create_event, create_event_session
 from modules.google_table.writer import create_new_sheet
@@ -30,6 +32,7 @@ def main(mode: str) -> None:
             row_info['event_id'] = create_event(row_info)
             row_info['event_session_id'], row_info['link'] = \
                 create_event_session(row_info, row_info['event_id'])
+            time.sleep(0.5)
         else:
             row_info['event_id'] = 'test'
             row_info['event_session_id'] = 'test'
@@ -41,6 +44,7 @@ def main(mode: str) -> None:
                 params=row_info,
                 mode=mode
             )
+            time.sleep(0.5)
 
         room_id += 1
         if room_id == len(ROOMS):
