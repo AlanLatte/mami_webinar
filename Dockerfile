@@ -9,4 +9,4 @@ ENV TZ Europe/Moscow
 
 RUN pip install -r requirements.txt
 
-CMD ["python","-m","modules.manager"]
+ENTRYPOINT ["python", "-m", "modules.manager"]
