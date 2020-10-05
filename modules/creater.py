@@ -1,6 +1,8 @@
 from .consts.common import HEADERS
 import requests
 
+from .csv_files import append_to_csv_file
+
 
 def create_event(params):
     url = "https://userapi.webinar.ru/v3/events"
@@ -37,7 +39,7 @@ def create_event(params):
         print("\tОшибка в создании вебинара")
 
 
-def create_event_session(params, event_id):
+def create_event_session(params, event_id, filename: str):
     url = f"https://userapi.webinar.ru/v3/events/{str(event_id)}/sessions"
     body = {
         "name": str(params["subject"]),
@@ -51,6 +53,7 @@ def create_event_session(params, event_id):
     }
     try:
         answer = requests.post(url, data=body, headers=HEADERS).json()
+        append_to_csv_file(event_id, answer["eventSessionId"], filename=filename)
         print(
             f"""
     Создана сессия
