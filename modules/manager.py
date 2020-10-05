@@ -1,5 +1,4 @@
 import datetime
-import logging
 import time
 
 import requests
@@ -92,8 +91,7 @@ def manager_controller():
                 else:
                     break
             logger.info(
-                "10 seconds delay started.",
-                timestamp=datetime.datetime.now(),
+                "10 seconds delay started.", timestamp=datetime.datetime.now(),
             )
             time.sleep(10)
 

@@ -1,9 +1,8 @@
 import time
-from datetime import datetime
 
 from modules.consts.common import ROOMS
 from modules.creater import create_event, create_event_session
-from modules.csv_files import create_csv_file, create_file_name, append_to_csv_file
+from modules.csv_files import append_to_csv_file, create_csv_file, create_file_name
 from modules.google_table.writer import create_new_sheet
 from modules.manager import manager_controller
 from modules.reader import read_all_info

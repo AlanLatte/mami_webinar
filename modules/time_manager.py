@@ -7,10 +7,8 @@ def converter_date(date):
 
 
 def converter_time(time):
-    return time.split(':')
+    return time.split(":")
 
 
 def converter_to_datetime(date_time):
-    return datetime.datetime.strptime(
-        f"{date_time}", "%Y-%m-%d %H:%M"
-    )
+    return datetime.datetime.strptime(f"{date_time}", "%Y-%m-%d %H:%M")

@@ -1,6 +1,6 @@
-from .consts.common import HEADERS
 import requests
 
+from .consts.common import HEADERS
 from .csv_files import append_to_csv_file
 
 

@@ -1,8 +1,10 @@
-from modules.time_manager import converter_date
-from modules.time_manager import converter_time
-from openpyxl import load_workbook
-from .consts.common import INPUT_DIR_PATH
 import os
+
+from openpyxl import load_workbook
+
+from modules.time_manager import converter_date, converter_time
+
+from .consts.common import INPUT_DIR_PATH
 
 
 def read_row_from_exel(sheet, row):
@@ -28,10 +30,10 @@ def full_read_exel_file(file, id_to_books):
     path = os.path.join(INPUT_DIR_PATH, file)
     while True:
         wb = load_workbook(path, data_only=True)
-        sheet = wb['Вебинары']
+        sheet = wb["Вебинары"]
         data_from_row = read_row_from_exel(sheet, row)
         book_data.append(data_from_row)
-        id_to_books[data_from_row[0]['id']] = file
+        id_to_books[data_from_row[0]["id"]] = file
         row += 1
         if sheet.cell(row=row, column=1).value is None:
             break
@@ -42,12 +44,15 @@ def read_all_info():
     all_data = []
     id_to_books = {}
     files = [prepair_file_name(file) for file in os.listdir(INPUT_DIR_PATH)]
-    exel_files = filter(lambda x: x.endswith('.xlsx'), files)
+    exel_files = filter(lambda x: x.endswith(".xlsx"), files)
     for file in exel_files:
         data_from_book, id_to_books = full_read_exel_file(file, id_to_books)
         all_data = [*all_data, *data_from_book]
     return all_data, id_to_books
 
+
 def prepair_file_name(file_name):
-    name = '.'.join(['.'.join(file_name.split('.')[:-1]), file_name.split('.')[-1].lower()])
+    name = ".".join(
+        [".".join(file_name.split(".")[:-1]), file_name.split(".")[-1].lower()]
+    )
     return name
