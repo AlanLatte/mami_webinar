@@ -81,7 +81,7 @@ configure(
         event_to_message,
         format_args,
         add_severity,
-        TimeStamper("iso"),
+        TimeStamper("iso", utc=False),
         json_dumps,
     ],
     cache_logger_on_first_use=True,
