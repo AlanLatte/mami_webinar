@@ -10,6 +10,9 @@ run:
 stop:
 	docker stop mami-worker
 
+logs:
+	docker logs -f mami-worker
+
 ## Format all
 fmt: format
 format: rm_imports isort black docformatter add-trailing-comma
