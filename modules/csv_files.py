@@ -7,7 +7,7 @@ def create_csv_file(filename: str):
 
 
 def create_file_name():
-    return datetime.now().strftime("%m/%d/%Y, %H:%M:%S") + ".csv"
+    return datetime.now().strftime("%m-%d-%YT%H-%M-%S") + ".csv"
 
 
 def append_to_csv_file(event_id: str, event_session_id: str, filename: str) -> None:
